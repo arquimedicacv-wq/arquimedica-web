@@ -1,0 +1,97 @@
+---
+
+import { AlertTriangle, XCircle, DollarSign, FileX } from '@lucide/astro';
+import Section from '../ui/Section.astro';
+import Container from '../ui/container.astro';
+import SectionHeader from '../ui/SectionHeader.astro';
+
+const iconMap: Record<string, any> = {
+  AlertTriangle,
+  XCircle,
+  DollarSign,
+  FileX,
+};
+
+const risks = [
+  {
+    icon: 'AlertTriangle',
+    color: 'text-red-500',
+    bg: 'bg-red-50 border-red-100',
+    title: 'Falla en inspección sanitaria',
+    description:
+      'Una instalación fuera de norma puede resultar en la suspensión inmediata de operaciones durante la visita de la COFEPRIS. El costo de rectificación urgente multiplica hasta 4× el costo original.',
+  },
+  {
+    icon: 'XCircle',
+    color: 'text-orange-500',
+    bg: 'bg-orange-50 border-orange-100',
+    title: 'Riesgo directo al paciente',
+    description:
+      'Una fuga de gas medicinal no detectada, una falla eléctrica en quirófano o un sistema de respaldo sin certificar puede tener consecuencias irreversibles. La normativa existe precisamente para evitar esto.',
+  },
+  {
+    icon: 'DollarSign',
+    color: 'text-yellow-600',
+    bg: 'bg-yellow-50 border-yellow-100',
+    title: 'Retrabajo costoso e imprevistos',
+    description:
+      'Contratar al proveedor más barato sin conocimiento normativo casi siempre termina en una segunda inversión. Las adecuaciones a posteriori son entre 60% y 200% más caras que hacerlo bien desde el inicio.',
+  },
+  {
+    icon: 'FileX',
+    color: 'text-purple-500',
+    bg: 'bg-purple-50 border-purple-100',
+    title: 'Licencias y permisos bloqueados',
+    description:
+      'Las licencias de funcionamiento, dictámenes de protección civil y acreditaciones hospitalarias requieren que cada instalación crítica esté certificada. Sin eso, no hay apertura.',
+  },
+] as const;
+---
+
+<Section class="bg-white">
+  <Container>
+    <!-- Header -->
+    <div class="mb-16">
+      <SectionHeader
+        eyebrow="El costo de ignorarlo"
+        title="¿Qué pasa cuando las instalaciones no cumplen la norma?"
+        description="En infraestructura hospitalaria, los errores no son observaciones técnicas. Son riesgos legales, financieros y humanos con consecuencias inmediatas."
+        centered
+      />
+    </div>
+
+    <!-- Riesgo cards -->
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      {risks.map(({ icon, color, bg, title, description }) => {
+        const Icon = iconMap[icon];
+        return (
+          <div class={`flex flex-col gap-4 rounded-2xl border p-6 ${bg}`}>
+            <div class={`w-10 h-10 ${color}`}>
+              <Icon class="w-10 h-10" strokeWidth={1.75} />
+            </div>
+            <h3 class="font-heading font-bold text-brand-dark text-base">{title}</h3>
+            <p class="text-sm leading-relaxed text-slate-600">{description}</p>
+          </div>
+        );
+      })}
+    </div>
+
+    <!-- Bottom callout -->
+    <div class="mt-14 rounded-2xl bg-brand-dark px-8 py-10 flex flex-col md:flex-row items-center gap-6 justify-between">
+      <div class="flex flex-col gap-2 text-center md:text-left">
+        <p class="text-white font-heading font-bold text-xl">
+          La solución no es la más cara. Es la correcta desde el inicio.
+        </p>
+        <p class="text-white/60 text-sm">
+          Trabajamos bajo un proceso de ingeniería estructurado, con dominio normativo completo y documentación entregable en cada etapa.
+        </p>
+      </div>
+      <a
+        href="/contacto/"
+        class="shrink-0 inline-flex items-center gap-2 rounded-lg bg-brand-turquoise px-7 py-3.5 font-heading font-semibold text-white transition-all hover:scale-[1.02] hover:shadow-lg"
+      >
+        Cotizar sin compromiso
+      </a>
+    </div>
+  </Container>
+</Section>

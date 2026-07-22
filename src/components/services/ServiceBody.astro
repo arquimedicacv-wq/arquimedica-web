@@ -1,0 +1,43 @@
+---
+interface Props {
+  includes: string[];
+}
+const { includes } = Astro.props;
+---
+
+<section class="py-16 bg-neutral-bg border-b border-neutral-border">
+  <div class="max-w-7xl mx-auto px-6 lg:px-16">
+    <div class="grid gap-12 lg:grid-cols-3">
+      <div class="lg:col-span-2">
+        <div class="relative rounded-2xl bg-white border border-neutral-border p-8 md:p-10 shadow-sm">
+          <div class="absolute -top-3 -left-3 flex h-10 w-10 items-center justify-center rounded-full bg-brand-turquoise text-white shadow-md">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/>
+              <path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/>
+            </svg>
+          </div>
+          <div class="prose prose-slate prose-lg max-w-none prose-headings:font-heading prose-headings:font-bold prose-headings:text-brand-dark prose-a:text-brand-turquoise prose-a:no-underline hover:prose-a:underline prose-img:rounded-xl prose-p:text-base prose-p:leading-8 prose-p:text-slate-600">
+            <slot />
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-col gap-4">
+        <h3 class="font-heading font-bold text-brand-dark text-base uppercase tracking-wide">
+          Qué incluye este servicio
+        </h3>
+        <ul class="flex flex-col gap-3">
+          {includes.map((item) => (
+            <li class="flex gap-3 items-start">
+              <span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-turquoise/15 text-brand-teal-dark mt-0.5">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              </span>
+              <span class="text-sm text-slate-600 leading-relaxed">{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

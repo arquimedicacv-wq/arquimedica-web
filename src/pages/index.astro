@@ -1,0 +1,45 @@
+---
+import Hero from "../components/sections/hero/Hero.astro";
+import ProblemAgitation from "../components/sections/ProblemAgitation.astro";
+import ServicesGrid from "../components/sections/ServicesGrid.astro";
+import WhyUs from "../components/sections/WhyUs.astro";
+import ProcessSteps from "../components/sections/ProcessSteps.astro";
+import NormativasHighlight from "../components/sections/NormativasHighlight.astro";
+import CTAForm from "../components/sections/CTAForm.astro";
+import FAQ from "../components/sections/FAQ.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "MedicalBusiness",
+  "name": "Arqui-Médica",
+  "description": "Especialistas en instalaciones hospitalarias: gases medicinales, aire acondicionado grado médico, instalaciones eléctricas y sistemas críticos para hospitales y clínicas en México.",
+  "url": "https://www.arqui-medica.com",
+  "areaServed": {
+    "@type": "Country",
+    "name": "México"
+  },
+  "serviceType": [
+    "Instalación de gases medicinales",
+    "Aire acondicionado grado médico",
+    "Instalación eléctrica hospitalaria",
+    "Instalación de piso vinílico conductivo",
+    "Cumplimiento normativo hospitalario"
+  ]
+};
+---
+
+<BaseLayout
+  title="Arqui-Médica | Instalaciones Hospitalarias bajo Normativa en México"
+  description="Especialistas en gases medicinales, aire acondicionado grado médico, instalaciones eléctricas hospitalarias y cumplimiento normativo (NOM-197-SSA1). Cobertura en toda la República Mexicana."
+  jsonLd={jsonLd}
+>
+  <Hero />
+  <ProblemAgitation />
+  <ServicesGrid />
+  <WhyUs />
+  <ProcessSteps />
+  <NormativasHighlight />
+  <CTAForm />
+  <FAQ />
+</BaseLayout>

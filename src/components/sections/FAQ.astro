@@ -1,0 +1,166 @@
+<section class="py-20 md:py-28 bg-white">
+  <div class="mx-auto w-full max-w-7xl px-5 sm:px-6 lg:px-8">
+    <div class="grid gap-14 lg:grid-cols-3 lg:gap-20">
+      <!-- Left: header -->
+      <div class="flex flex-col gap-6">
+        <span
+          class="text-sm font-semibold uppercase tracking-[0.2em] text-teal-600"
+        >
+          Preguntas frecuentes
+        </span>
+        <h2
+          class="text-3xl font-bold tracking-tight text-slate-900 md:text-4xl"
+        >
+          Resolvemos tus dudas antes de la primera llamada
+        </h2>
+        <p class="text-lg leading-8 text-slate-600">
+          Las preguntas que más recibimos de arquitectos, contratistas y
+          administradores hospitalarios.
+        </p>
+        <a
+          href="/contacto/"
+          class="inline-flex w-fit items-center gap-2 rounded-lg border border-neutral-border px-5 py-2.5 text-sm font-semibold text-brand-dark transition-all hover:border-brand-teal-dark hover:shadow-sm"
+        >
+          ¿Otra pregunta? Escríbenos
+        </a>
+      </div>
+
+      <!-- Right: accordion -->
+      <div class="lg:col-span-2 flex flex-col divide-y divide-neutral-border">
+        {
+          [
+            {
+              q: "¿Están certificados para trabajar en hospitales y unidades de salud?",
+              a: "Sí. Nuestro equipo tiene formación específica en instalaciones hospitalarias y aplica las NOMs vigentes en cada proyecto. Entregamos la documentación técnica necesaria para auditorías de COFEPRIS, protección civil y certificaciones hospitalarias.",
+            },
+            {
+              q: "¿Trabajan en toda la República Mexicana?",
+              a: "Sí. Ejecutamos proyectos en hospitales, clínicas y laboratorios en toda la República. Contamos con personal propio en los estados con mayor demanda y coordinamos logística para proyectos en el interior del país.",
+            },
+            {
+              q: "¿Cuánto tiempo toma recibir una cotización?",
+              a: "Para proyectos con información disponible (tipo de instalación, planos o especificaciones básicas), entregamos una propuesta en 3 a 5 días hábiles. Para proyectos que requieren visita técnica, coordinamos el levantamiento en campo y entregamos la propuesta dentro de los 5 días hábiles posteriores.",
+            },
+            {
+              q: "¿Qué documentación entregan al término del proyecto?",
+              a: "Entregamos carpeta técnica completa: memorias de cálculo, planos as-built, protocolos de pruebas (hermeticidad, mediciones eléctricas, resistencia de tierra), certificados de materiales y manuales de operación. La carpeta está estructurada para ser presentada directamente en inspecciones oficiales.",
+            },
+            {
+              q: "¿Puedo contratar un solo servicio o necesito contratar todos?",
+              a: "Puedes contratar cualquier servicio de forma independiente. Sin embargo, muchos proyectos hospitalarios se benefician de coordinar múltiples instalaciones bajo un solo proveedor: reduce interferencias en obra, tiempos y costos de coordinación. Evaluamos cada caso con el cliente.",
+            },
+            {
+              q: "¿Trabajan con obra nueva o también con adecuaciones a instalaciones existentes?",
+              a: "Trabajamos en ambos casos. Para adecuaciones realizamos primero un diagnóstico normativo de las instalaciones actuales, identificamos las no conformidades y proponemos un plan de corrección priorizado por riesgo y urgencia regulatoria.",
+            },
+            {
+              q: "¿Cómo sé si mi instalación actual cumple la normativa?",
+              a: "La única forma de saberlo con certeza es mediante un diagnóstico técnico formal. Realizamos auditorías de instalaciones existentes donde evaluamos cada sistema contra la norma vigente y entregamos un informe con hallazgos, nivel de riesgo y recomendaciones de corrección.",
+            },
+            {
+              q: "¿Qué pasa si necesito atención urgente por una falla en una instalación crítica?",
+              a: "Contamos con línea de atención para emergencias operativas. Aunque no somos una empresa de mantenimiento correctivo de guardia 24/7, respondemos a situaciones críticas con la mayor rapidez posible y coordinamos soluciones provisionales mientras se planea la corrección definitiva.",
+            },
+          ].map((item, i) => (
+            <details class="group py-5 cursor-pointer" id={`faq-${i}`}>
+              <summary class="flex items-center justify-between gap-4 text-brand-dark font-heading font-semibold text-base list-none select-none [&::-webkit-details-marker]:hidden">
+                {item.q}
+                <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-neutral-border bg-neutral-bg text-neutral-text transition-all group-open:rotate-45 group-open:border-brand-turquoise group-open:text-brand-turquoise">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-3.5 w-3.5"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M12 5v14M5 12h14" />
+                  </svg>
+                </span>
+              </summary>
+              <p class="mt-4 text-sm text-slate-600 leading-relaxed max-w-prose">
+                {item.a}
+              </p>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Schema.org FAQPage — SEO -->
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "¿Están certificados para trabajar en hospitales y unidades de salud?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Sí. Nuestro equipo tiene formación específica en instalaciones hospitalarias y aplica las NOMs vigentes en cada proyecto. Entregamos la documentación técnica necesaria para auditorías de COFEPRIS, protección civil y certificaciones hospitalarias."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Trabajan en toda la República Mexicana?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Sí. Ejecutamos proyectos en hospitales, clínicas y laboratorios en toda la República. Contamos con personal propio en los estados con mayor demanda y coordinamos logística para proyectos en el interior del país."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Cuánto tiempo toma recibir una cotización?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Para proyectos con información disponible, entregamos una propuesta en 3 a 5 días hábiles. Para proyectos que requieren visita técnica, coordinamos el levantamiento en campo y entregamos la propuesta dentro de los 5 días hábiles posteriores."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Qué documentación entregan al término del proyecto?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Entregamos carpeta técnica completa: memorias de cálculo, planos as-built, protocolos de pruebas, certificados de materiales y manuales de operación. La carpeta está estructurada para ser presentada directamente en inspecciones oficiales."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Puedo contratar un solo servicio o necesito contratar todos?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Puedes contratar cualquier servicio de forma independiente. Sin embargo, muchos proyectos hospitalarios se benefician de coordinar múltiples instalaciones bajo un solo proveedor."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Trabajan con obra nueva o también con adecuaciones a instalaciones existentes?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Trabajamos en ambos casos. Para adecuaciones realizamos primero un diagnóstico normativo de las instalaciones actuales y proponemos un plan de corrección priorizado."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Cómo sé si mi instalación actual cumple la normativa?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Realizamos auditorías de instalaciones existentes donde evaluamos cada sistema contra la norma vigente y entregamos un informe con hallazgos, nivel de riesgo y recomendaciones de corrección."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Qué pasa si necesito atención urgente por una falla en una instalación crítica?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Contamos con línea de atención para emergencias operativas. Respondemos a situaciones críticas con la mayor rapidez posible y coordinamos soluciones provisionales mientras se planea la corrección definitiva."
+        }
+      }
+    ]
+  }
+</script>

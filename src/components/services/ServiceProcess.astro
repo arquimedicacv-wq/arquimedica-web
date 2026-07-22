@@ -1,0 +1,40 @@
+---
+interface Step {
+  step: string;
+  description: string;
+}
+interface Props {
+  process: Step[];
+}
+
+const { process } = Astro.props;
+---
+
+<section id="proceso" class="py-16 bg-neutral-bg border-b border-neutral-border">
+  <div class="max-w-7xl mx-auto px-6 lg:px-16">
+    <div class="flex flex-col gap-10">
+      <div class="flex flex-col gap-2">
+        <span class="text-sm font-semibold uppercase tracking-[0.2em] text-teal-600">Cómo lo hacemos</span>
+        <h2 class="text-2xl font-bold text-brand-dark md:text-3xl">Proceso de trabajo</h2>
+      </div>
+      <div class="flex flex-col">
+        {process.map((step, index) => (
+          <div class="flex gap-5">
+            <div class="flex flex-col items-center">
+              <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 border-brand-turquoise bg-white text-brand-turquoise font-heading font-bold text-sm shadow-sm">
+                {String(index + 1).padStart(2, "0")}
+              </div>
+              {index < process.length - 1 && (
+                <div class="mt-1 w-px flex-1 bg-brand-turquoise/20 mb-1 min-h-[2rem]" />
+              )}
+            </div>
+            <div class="pb-8 flex flex-col gap-1.5 pt-1.5">
+              <h3 class="font-heading font-bold text-brand-dark text-base">{step.step}</h3>
+              <p class="text-sm text-slate-600 leading-relaxed max-w-2xl">{step.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

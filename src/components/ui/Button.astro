@@ -1,0 +1,51 @@
+---
+import { MessageCircle, ArrowRight } from "@lucide/astro";
+
+interface Props {
+  variant?: "primary" | "secondary" | "whatsapp";
+  size?: "sm" | "md" | "lg";
+  href?: string;
+  type?: "button" | "submit";
+  class?: string;
+  conversionLabel?: string;
+}
+
+const {
+  variant = "primary",
+  size = "md",
+  href,
+  type = "button",
+  class: className = "",
+  conversionLabel,
+} = Astro.props;
+
+const base =
+  "inline-flex items-center justify-center gap-2 font-heading font-semibold rounded-lg transition-all duration-200 hover:scale-[1.02] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-turquoise";
+
+const variants: Record<string, string> = {
+  primary: "bg-brand-turquoise text-white shadow-sm hover:shadow-md",
+  secondary:
+    "bg-white text-brand-dark border border-neutral-border hover:border-brand-teal-dark",
+  whatsapp: "bg-brand-whatsapp text-white shadow-sm hover:shadow-md",
+};
+
+const sizes: Record<string, string> = {
+  sm: "px-4 py-2 text-sm",
+  md: "px-6 py-3 text-base",
+  lg: "px-8 py-4 text-lg",
+};
+
+const classes = `${base} ${variants[variant]} ${sizes[size]} ${className}`;
+const Tag = href ? "a" : "button";
+---
+
+<Tag
+  href={href}
+  type={!href ? type : undefined}
+  class={classes}
+  data-conversion={conversionLabel}
+>
+  {variant === "whatsapp" && <MessageCircle class="w-5 h-5" stroke-width={2} />}
+  <slot />
+  {variant === "primary" && <ArrowRight class="w-4 h-4" stroke-width={2.5} />}
+</Tag>

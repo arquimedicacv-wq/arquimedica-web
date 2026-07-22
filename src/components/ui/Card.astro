@@ -1,0 +1,100 @@
+---
+import { Image } from "astro:assets";
+import { getGalleryImage } from "../../images/servicios/index";
+import {
+  ShieldCheck,
+  PanelTop,
+  Wind,
+  LayoutGrid,
+  Zap,
+  Plug,
+  Snowflake,
+  BatteryCharging,
+  ArrowRight,
+} from "@lucide/astro";
+
+const iconMap: Record<string, any> = {
+  ShieldCheck,
+  PanelTop,
+  Wind,
+  LayoutGrid,
+  Zap,
+  Plug,
+  Snowflake,
+  BatteryCharging,
+};
+
+interface Props {
+  icon?: string;
+  title: string;
+  description: string;
+  href?: string;
+  eyebrow?: string;
+  image?: string;
+}
+
+const { icon, title, description, href, eyebrow, image } = Astro.props;
+const Icon = icon ? iconMap[icon] : null;
+const Tag = href ? "a" : "div";
+---
+
+<Tag
+  href={href}
+  class="group relative flex h-full flex-col gap-4 overflow-hidden rounded-xl border border-neutral-border bg-white hover:border-brand-turquoise/50 hover:shadow-md transition-all duration-200"
+>
+  {
+    image && (
+      <div class="h-40 w-full overflow-hidden relative">
+        {(() => {
+          const localImage = getGalleryImage(image);
+          return localImage ? (
+            <Image
+              src={localImage}
+              alt={title}
+              class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              loading="lazy"
+            />
+          ) : (
+            <Image
+              src={image}
+              alt={title}
+              width={400}
+              height={225}
+              class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              loading="lazy"
+            />
+          );
+        })()}
+      </div>
+    )
+  }
+  <div class="flex flex-col gap-4 p-6 flex-grow">
+    {
+      eyebrow && (
+        <span class="text-sm font-heading font-bold text-brand-gold">
+          {eyebrow}
+        </span>
+      )
+    }
+
+    {
+      Icon && (
+        <div class="w-11 h-11 rounded-lg absolute top-30 left-0 m-4 bg-brand-turquoise/80 flex items-center justify-center text-brand-teal-dark group-hover:bg-brand-turquoise group-hover:text-white transition-colors duration-200">
+          <Icon class="w-6 h-6" strokeWidth={1.75} />
+        </div>
+      )
+    }
+
+    <h3 class="font-heading font-bold text-lg text-brand-dark">{title}</h3>
+    <p class="text-neutral-text text-sm leading-relaxed">{description}</p>
+
+    {
+      href && (
+        <span class="mt-auto text-sm font-semibold text-brand-turquoise flex items-center gap-1">
+          Ver más
+          <ArrowRight class="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
+        </span>
+      )
+    }
+  </div>
+</Tag>

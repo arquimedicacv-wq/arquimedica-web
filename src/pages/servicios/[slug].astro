@@ -1,0 +1,88 @@
+---
+import { getCollection, render } from "astro:content";
+import ServiceLayout from "../../layouts/ServiceLayout.astro";
+import { buildWhatsAppUrl } from "../../data/navServices";
+import * as icons from "@lucide/astro";
+import ServiceHero from "../../components/services/ServiceHero.astro";
+import ServicePainPoints from "../../components/services/ServicePainPoints.astro";
+import ServiceBody from "../../components/services/ServiceBody.astro";
+import ServiceNormativa from "../../components/services/ServiceNormativa.astro";
+import ServiceProcess from "../../components/services/ServiceProcess.astro";
+import ServiceGallery from "../../components/services/ServiceGallery.astro";
+import ServiceFAQ from "../../components/services/ServiceFAQ.astro";
+import ServiceCTA from "../../components/services/ServiceCTA.astro";
+import ServiceRelated from "../../components/services/ServiceRelated.astro";
+
+export async function getStaticPaths() {
+  const services = await getCollection("services");
+  return services.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const data = entry.data;
+
+const iconKey = data.icon as keyof typeof icons;
+const ServiceIcon = icons[iconKey] ?? icons.Settings;
+
+const allServices = await getCollection("services");
+const related = allServices.filter((s) => data.relatedServices.includes(s.id));
+
+const waUrl = buildWhatsAppUrl(
+  `Hola, me interesa cotizar el servicio de ${data.title}. ¿Podrían orientarme?`,
+);
+
+const faqJsonLd =
+  data.faq.length > 0
+    ? JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: data.faq.map((item) => ({
+          "@type": "Question",
+          name: item.question,
+          acceptedAnswer: { "@type": "Answer", text: item.answer },
+        })),
+      })
+    : null;
+---
+
+<ServiceLayout
+  title={`${data.title} | Arqui-Médica`}
+  description={data.metaDescription}
+  slug={entry.id}
+>
+  <ServiceHero
+    title={data.title}
+    heroTitle={data.heroTitle}
+    heroSubtitle={data.heroSubtitle}
+    slug={entry.id}
+    waUrl={waUrl}
+    ServiceIcon={ServiceIcon}
+    gallery={data.gallery ?? []}
+  />
+
+  <ServicePainPoints painPoints={data.painPoints} />
+
+  <ServiceBody includes={data.includes}>
+    <Content />
+  </ServiceBody>
+
+  <ServiceNormativa normativa={data.normativa} />
+
+  <ServiceProcess process={data.process} />
+
+  {data.gallery && data.gallery.length > 0 && (
+    <ServiceGallery gallery={data.gallery} />
+  )}
+
+  {data.faq.length > 0 && <ServiceFAQ faq={data.faq} />}
+
+  <ServiceCTA waUrl={waUrl} slug={entry.id} />
+
+  {related.length > 0 && <ServiceRelated related={related} />}
+
+  {faqJsonLd && <script type="application/ld+json" set:html={faqJsonLd} />}
+</ServiceLayout>

@@ -1,0 +1,44 @@
+---
+// src/pages/gracias.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Container from '../components/ui/container.astro';
+import { CheckCircle2, ArrowRight } from '@lucide/astro';
+import { buildWhatsAppUrl } from '../data/navServices';
+
+const waUrl = buildWhatsAppUrl('Hola, acabo de enviar un formulario en su página web.');
+---
+
+<BaseLayout
+  title="¡Mensaje Enviado! | Arqui-Médica"
+  description="Gracias por contactar a Arqui-Médica. Un ingeniero especialista se comunicará contigo a la brevedad."
+>
+  <section class="py-24 md:py-32 bg-neutral-bg min-h-[70vh] flex items-center">
+    <Container>
+      <div class="max-w-2xl mx-auto text-center flex flex-col items-center gap-6">
+        
+        <div class="flex h-24 w-24 items-center justify-center rounded-full bg-[#E6FCFC] text-brand-turquoise shadow-sm">
+          <CheckCircle2 class="h-12 w-12" />
+        </div>
+        
+        <h1 class="text-4xl font-extrabold text-brand-dark md:text-5xl">
+          ¡Mensaje enviado con éxito!
+        </h1>
+        
+        <p class="text-lg text-slate-600 leading-relaxed max-w-lg mx-auto">
+          Hemos recibido tu solicitud de cotización. Un ingeniero especialista de nuestro equipo revisará tu proyecto y se pondrá en contacto contigo en las próximas horas.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4 mt-4 w-full sm:w-auto">
+          <a href="/" class="inline-flex justify-center items-center gap-2 rounded-xl border border-neutral-border bg-white px-6 py-4 font-heading font-semibold text-brand-dark transition-all hover:bg-neutral-bg shadow-sm">
+            Volver al inicio
+          </a>
+          <a href={waUrl} target="_blank" rel="noopener noreferrer" class="inline-flex justify-center items-center gap-2 rounded-xl bg-brand-whatsapp px-6 py-4 font-heading font-bold text-white transition-all hover:scale-105 shadow-md">
+            Prefiero hablar por WhatsApp
+            <ArrowRight class="h-4 w-4" />
+          </a>
+        </div>
+        
+      </div>
+    </Container>
+  </section>
+</BaseLayout>

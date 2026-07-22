@@ -1,0 +1,38 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@import "@fontsource/manrope/600.css";
+@import "@fontsource/manrope/700.css";
+@import "@fontsource/manrope/800.css";
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/500.css";
+@import "@fontsource/inter/600.css";
+
+@theme {
+  --color-brand-turquoise: #2AC5CA;
+  --color-brand-dark: #2F3D43;
+  --color-brand-teal-dark: #356879;
+  --color-brand-gold: #FFD245;
+  --color-brand-whatsapp: #25D366;
+
+  --color-neutral-bg: #F7F9FA;
+  --color-neutral-border: #E2E8ED;
+  --color-neutral-text: #64748B;
+
+  --font-heading: "Manrope", sans-serif;
+  --font-body: "Inter", sans-serif;
+}
+
+/* Base tipográfica global */
+body {
+  font-family: var(--font-body);
+  color: var(--color-brand-dark);
+  background-color: white;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-heading);
+}

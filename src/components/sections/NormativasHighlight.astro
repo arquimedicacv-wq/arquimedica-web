@@ -1,0 +1,155 @@
+---
+import Section from "../ui/Section.astro";
+import Container from "../ui/container.astro";
+import SectionHeader from "../ui/SectionHeader.astro";
+import { ShieldCheck, ExternalLink } from "@lucide/astro";
+
+const norms = [
+  {
+    code: "NOM-197-SSA1-2000",
+    title: "Gases Medicinales",
+    description:
+      "Requisitos mínimos de infraestructura y equipamiento para el manejo, uso y disposición de medicamentos en unidades de salud.",
+    services: ["Gases Medicinales"],
+    href: "/recursos/nom-197-ssa1/",
+  },
+  {
+    code: "NOM-001-SEDE-2012",
+    title: "Instalaciones Eléctricas",
+    description:
+      "Instalaciones destinadas al suministro y uso de energía eléctrica en edificaciones de uso comercial e industrial, incluyendo hospitales.",
+    services: ["Instalación Eléctrica Hospitalaria"],
+    href: "/recursos/nom-001-sede/",
+  },
+  {
+    code: "NOM-020-STPS-2011",
+    title: "Recipientes Sujetos a Presión",
+    description:
+      "Funcionamiento y condiciones de seguridad de recipientes sujetos a presión, recipientes criogénicos y generadores de vapor.",
+    services: ["Gases Medicinales", "Instalación Eléctrica Hospitalaria"],
+    href: "/recursos/nom-020-stps/",
+  },
+  {
+    code: "NOM-059-SSA1-2015",
+    title: "Medicamentos en Unidades de Salud",
+    description:
+      "Buenas prácticas de fabricación en establecimientos de salud. Aplica a las instalaciones donde se almacenen o administren medicamentos.",
+    services: ["Gases Medicinales", "Aire Acondicionado Grado Médico"],
+    href: "/recursos/nom-059-ssa1/",
+  },
+  {
+    code: "NOM-087-SEMARNAT-2002",
+    title: "Residuos Biológico-Infecciosos",
+    description:
+      "Clasificación y especificaciones de manejo. Aplica a las instalaciones donde se generan o manejan residuos peligrosos biológico-infecciosos.",
+    services: ["Cumplimiento Normativo"],
+    href: "/recursos/",
+  },
+  {
+    code: "NMX-J-136-ANCE",
+    title: "Sistemas de Puesta a Tierra",
+    description:
+      "Norma mexicana para sistemas de puesta a tierra en instalaciones eléctricas. Define resistencia máxima admisible en áreas médicas.",
+    services: ["Instalación Eléctrica Hospitalaria"],
+    href: "/recursos/",
+  },
+  {
+    code: "NOM-013-ENER-2013",
+    title: "Eficiencia Energética",
+    description:
+      "Eficiencia energética en sistemas de aire acondicionado. Relevante para unidades de climatización en áreas críticas de hospitales.",
+    services: ["Aire Acondicionado Grado Médico"],
+    href: "/recursos/",
+  },
+  {
+    code: "Prot. Civil / NFPA 99",
+    title: "Sistemas de Gas Médico (NFPA)",
+    description:
+      "Estándar internacional aplicado como referencia técnica en proyectos complejos: sistemas de gas médico, alertas de alarma y alarmas de presión.",
+    services: ["Gases Medicinales", "Instalación Eléctrica Hospitalaria"],
+    href: "/recursos/",
+  },
+];
+---
+
+<Section class="bg-brand-dark overflow-hidden">
+  <Container>
+    <div class="flex flex-col gap-14">
+      <!-- Header on dark bg -->
+      <div class="flex flex-col gap-4">
+        <span
+          class="text-sm font-semibold uppercase tracking-[0.2em] text-brand-turquoise"
+        >
+          Normativas que dominamos
+        </span>
+        <h2
+          class="max-w-3xl text-3xl font-bold tracking-tight text-white md:text-4xl"
+        >
+          Conocimiento normativo como diferenciador técnico
+        </h2>
+        <p class="max-w-2xl text-lg leading-8 text-white/60">
+          No trabajamos con normativas genéricas. Cada proyecto tiene
+          identificadas las NOMs aplicables desde la etapa de ingeniería, antes
+          de empezar la obra.
+        </p>
+      </div>
+
+      <!-- Norms grid -->
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          norms.map((norm) => (
+            <a
+              href={norm.href}
+              class="group flex flex-col gap-3 rounded-xl border border-white/10 bg-white/5 p-5 transition-all hover:border-brand-turquoise/50 hover:bg-white/10"
+            >
+              <div class="flex items-start justify-between gap-2">
+                <ShieldCheck
+                  class="w-5 h-5 text-brand-turquoise shrink-0 mt-0.5"
+                  stroke-width={1.75}
+                />
+                <ExternalLink
+                  class="w-3.5 h-3.5 text-white/20 group-hover:text-brand-turquoise/60 transition-colors shrink-0 mt-1"
+                  stroke-width={2}
+                />
+              </div>
+              <div class="flex flex-col gap-1">
+                <span class="font-heading font-bold text-brand-turquoise text-xs tracking-wide">
+                  {norm.code}
+                </span>
+                <h3 class="font-heading font-bold text-white text-sm">
+                  {norm.title}
+                </h3>
+              </div>
+              <p class="text-xs text-white/50 leading-relaxed line-clamp-3">
+                {norm.description}
+              </p>
+              <div class="mt-auto flex flex-wrap gap-1.5">
+                {norm.services.map((service) => (
+                  <span class="rounded-full bg-white/10 px-2 py-0.5 text-[10px] font-semibold text-white/70">
+                    {service}
+                  </span>
+                ))}
+              </div>
+            </a>
+          ))
+        }
+      </div>
+
+      <!-- Bottom note -->
+      <div
+        class="flex flex-col sm:flex-row items-center justify-between gap-6 rounded-xl border border-white/10 bg-white/5 px-7 py-6"
+      >
+        <p class="text-white/70 text-sm leading-relaxed max-w-xl">
+          ¿Tienes dudas sobre qué normativa aplica a tu proyecto? Un
+          especialista puede orientarte en la primera llamada, sin costo.
+        </p>
+        <a
+          href="/recursos/"
+          class="shrink-0 inline-flex items-center gap-2 rounded-lg border border-brand-turquoise/40 px-5 py-2.5 text-sm font-semibold text-brand-turquoise transition-all hover:bg-brand-turquoise hover:text-white"
+        >
+          Ver todos los recursos
+        </a>
+      </div>
+    </div>
+  </Container>
+</Section>

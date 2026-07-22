@@ -1,0 +1,110 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Container from "../components/ui/container.astro";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: "Aviso de Privacidad | Arqui-Médica",
+};
+---
+
+<BaseLayout
+  title="Aviso de Privacidad | Arqui-Médica"
+  description="Aviso de privacidad y protección de datos personales de Arqui-Médica."
+  jsonLd={jsonLd}
+>
+  <section class="py-16 md:py-24 bg-neutral-bg min-h-[60vh]">
+    <Container>
+      <div
+        class="mx-auto max-w-3xl rounded-2xl border border-neutral-border bg-white p-8 md:p-12 shadow-sm"
+      >
+        <h1 class="text-3xl font-extrabold text-brand-dark mb-8">
+          Aviso de Privacidad
+        </h1>
+
+        <div class="prose prose-slate prose-brand max-w-none">
+          <p>
+            En cumplimiento a la Ley Federal de Protección de Datos Personales
+            en Posesión de los Particulares (la "Ley"), <strong
+              >Arqui-Médica</strong
+            > le informa que es responsable de recabar sus datos personales, del uso
+            que se le dé a los mismos y de su protección.
+          </p>
+
+          <h3>1. Datos personales que recabamos</h3>
+          <p>
+            Recabamos sus datos personales de forma directa cuando usted mismo
+            nos los proporciona por diversos medios, como cuando participa en
+            nuestras promociones, nos da información con objeto de que le
+            prestemos un servicio de cotización o evaluación técnica, o utiliza
+            nuestros formularios de contacto en el sitio web
+            (https://www.arqui-medica.com). Los datos que obtenemos por este
+            medio pueden ser:
+          </p>
+          <ul>
+            <li>Nombre completo o razón social</li>
+            <li>Correo electrónico</li>
+            <li>Teléfono (móvil o fijo)</li>
+            <li>
+              Información general sobre su proyecto hospitalario o clínica
+            </li>
+          </ul>
+
+          <h3>2. Finalidades del tratamiento de datos</h3>
+          <p>
+            Sus datos personales serán utilizados para las siguientes
+            finalidades esenciales para el servicio que solicita:
+          </p>
+          <ul>
+            <li>
+              Proveer los servicios de cotización, diseño e instalación de
+              infraestructura médica.
+            </li>
+            <li>
+              Dar seguimiento a sus solicitudes de información enviadas a través
+              de WhatsApp o formularios.
+            </li>
+            <li>Facturación y cobranza.</li>
+            <li>Evaluar la calidad del servicio que le brindamos.</li>
+          </ul>
+
+          <h3>3. Uso de tecnologías de rastreo (Cookies y Analytics)</h3>
+          <p>
+            Le informamos que en nuestra página de internet utilizamos cookies y
+            tecnologías de analítica (como Google Analytics 4) a través de las
+            cuales es posible monitorear su comportamiento como usuario de
+            internet. Esto nos ayuda a brindarle un mejor servicio y experiencia
+            de usuario al navegar en nuestra página. Los datos personales que
+            recabamos a través de estas tecnologías se utilizan para fines
+            estadísticos y de medición de conversiones.
+          </p>
+
+          <h3>4. Derechos ARCO</h3>
+          <p>
+            Usted tiene derecho de <strong>A</strong>cceder, <strong>R</strong
+            >ectificar y <strong>C</strong>ancelar sus datos personales, así
+            como de <strong>O</strong>ponerse al tratamiento de los mismos o
+            revocar el consentimiento que para tal fin nos haya otorgado. Para
+            ejercer estos derechos ARCO, envíe una solicitud a nuestro correo
+            electrónico de contacto: <strong>contacto@arqui-medica.com</strong>.
+          </p>
+
+          <h3>5. Cambios al aviso de privacidad</h3>
+          <p>
+            Nos reservamos el derecho de efectuar en cualquier momento
+            modificaciones o actualizaciones al presente aviso de privacidad,
+            para la atención de novedades legislativas, políticas internas o
+            nuevos requerimientos para la prestación u ofrecimiento de nuestros
+            servicios o productos. Estas modificaciones estarán disponibles al
+            público a través de nuestra página de internet.
+          </p>
+
+          <p class="text-sm text-slate-500 mt-10">
+            <em>Última actualización: Agosto de 2024.</em>
+          </p>
+        </div>
+      </div>
+    </Container>
+  </section>
+</BaseLayout>

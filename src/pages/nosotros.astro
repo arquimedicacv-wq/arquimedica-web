@@ -1,0 +1,160 @@
+---
+// src/pages/nosotros.astro
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Container from "../components/ui/container.astro";
+import SectionHeader from "../components/ui/SectionHeader.astro";
+import Hero from "../components/sections/hero/Hero.astro";
+import { buildWhatsAppUrl } from "../data/navServices";
+import { Image } from "astro:assets";
+import { ShieldCheck, HardHat, FileCheck, Stethoscope } from "@lucide/astro";
+
+const waUrl = buildWhatsAppUrl(
+  "Hola, quiero conocer más sobre su empresa y servicios.",
+);
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  mainEntity: {
+    "@type": "MedicalBusiness",
+    name: "Arqui-Médica",
+    description:
+      "Empresa de ingeniería especializada en el diseño, instalación y certificación de infraestructura hospitalaria en México.",
+    url: "https://www.arqui-medica.com/nosotros/",
+  },
+};
+---
+
+<BaseLayout
+  title="Sobre Nosotros | Ingeniería Hospitalaria Especializada | Arqui-Médica"
+  description="Conoce a Arqui-Médica, expertos en infraestructura hospitalaria. Ingenieros especializados en instalaciones eléctricas, gases medicinales y normativa vigente en México."
+  jsonLd={jsonLd}
+>
+  <Hero
+    title="Ingeniería que salva"
+    highlighted="vidas"
+    description="No instalamos cables ni tuberías comunes. En Arqui-Médica construimos la infraestructura crítica que sostiene el funcionamiento de quirófanos, áreas de cuidados intensivos y laboratorios. Conocemos la norma y la aplicamos."
+    badgeText="Nuestra Empresa"
+    showBenefits={false}
+    showActions={false}
+  />
+
+  <!-- ── NUESTRA DIFERENCIA (VALORES) ── -->
+  <section class="py-20 bg-neutral-bg">
+    <Container>
+      <SectionHeader
+        eyebrow="Por qué elegirnos"
+        title="La diferencia Arqui-Médica"
+        description="A diferencia de los contratistas generales, nuestro personal está entrenado específicamente para entornos clínicos críticos donde el error no es una opción."
+        centered
+      />
+
+      <div class="grid gap-8 md:grid-cols-3 mt-12">
+        {
+          [
+            {
+              icon: ShieldCheck,
+              title: "Cumplimiento Normativo",
+              desc: "Cada proyecto que ejecutamos se entrega con carpeta técnica, pruebas y protocolos listos para auditorías de COFEPRIS o protección civil.",
+            },
+            {
+              icon: HardHat,
+              title: "Ingeniería Especializada",
+              desc: "Nuestro personal de instalación entiende que está trabajando en un entorno de soporte vital. No improvisamos, ejecutamos según diseño.",
+            },
+            {
+              icon: FileCheck,
+              title: "Documentación As-Built",
+              desc: "Entregamos planos actualizados, bitácoras de pruebas, certificados de materiales (UL, CE) e informes de medición sellados.",
+            },
+          ].map((item) => (
+            <div class="flex flex-col gap-4 rounded-2xl border border-neutral-border bg-white p-8 transition-shadow hover:shadow-lg">
+              <div class="flex h-14 w-14 items-center justify-center rounded-xl bg-brand-turquoise/10 text-brand-teal-dark">
+                <item.icon class="h-7 w-7" stroke-width={1.5} />
+              </div>
+              <h3 class="text-xl font-bold text-brand-dark">{item.title}</h3>
+              <p class="text-slate-600 leading-relaxed">{item.desc}</p>
+            </div>
+          ))
+        }
+      </div>
+    </Container>
+  </section>
+
+  <!-- ── MANIFIESTO / MISIÓN ── -->
+  <section class="py-20 bg-white border-y border-neutral-border">
+    <Container>
+      <div class="grid gap-12 md:grid-cols-2 items-center">
+        <div
+          class="aspect-[4/3] w-full overflow-hidden rounded-2xl bg-slate-100"
+        >
+          <Image
+            src="https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?auto=format&fit=crop&q=80&w=800"
+            alt="Médicos en quirófano de alta tecnología"
+            width={800}
+            height={600}
+            class="h-full w-full object-cover"
+            loading="lazy"
+          />
+        </div>
+        <div class="flex flex-col gap-6">
+          <div class="flex items-center gap-3">
+            <span
+              class="flex h-8 w-8 items-center justify-center rounded-full bg-brand-turquoise/15 text-brand-teal-dark"
+            >
+              <Stethoscope class="h-4 w-4" />
+            </span>
+            <span
+              class="font-heading font-bold text-brand-turquoise uppercase tracking-wide text-sm"
+              >Nuestro Compromiso</span
+            >
+          </div>
+          <h2 class="text-3xl font-extrabold text-brand-dark md:text-4xl">
+            La infraestructura invisible que protege al paciente
+          </h2>
+          <div class="prose prose-slate prose-lg">
+            <p>
+              Creemos que un hospital seguro comienza mucho antes de que entre
+              el primer paciente. Comienza en el diseño del tablero eléctrico,
+              en la soldadura de la tubería de oxígeno y en la medición de
+              resistividad del piso del quirófano.
+            </p>
+            <p>
+              Nuestra misión es proveer a directores médicos, administradores de
+              clínicas y constructoras, la <strong>tranquilidad técnica</strong> de
+              que sus instalaciones cumplen estrictamente con la NOM-016-SSA3 y la
+              NOM-001-SEDE.
+            </p>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- ── CTA BAND ── -->
+  <section class="py-16 bg-brand-turquoise">
+    <Container>
+      <div
+        class="flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left"
+      >
+        <div class="flex flex-col gap-3">
+          <h2 class="text-2xl font-extrabold text-white md:text-3xl">
+            ¿Buscas un proveedor confiable para tu hospital?
+          </h2>
+          <p class="text-white/80 text-lg">
+            Hablemos de tu proyecto. Realizamos levantamientos y cotizaciones en
+            todo México.
+          </p>
+        </div>
+        <div class="shrink-0">
+          <a
+            href="/contacto/"
+            class="inline-flex items-center gap-2.5 rounded-xl bg-white px-8 py-4 font-heading font-bold text-brand-teal-dark shadow-md transition-all hover:scale-105 hover:shadow-xl"
+          >
+            Contactar a un ingeniero
+          </a>
+        </div>
+      </div>
+    </Container>
+  </section>
+</BaseLayout>

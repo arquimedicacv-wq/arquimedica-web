@@ -1,0 +1,129 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Container from "../../components/ui/container.astro";
+import { ArrowLeft, Calendar, Tag } from "@lucide/astro";
+
+export async function getStaticPaths() {
+  const recursos = await getCollection("recursos");
+  return recursos.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const data = entry.data;
+
+const allServices = await getCollection("services");
+const relatedService = allServices.find((s) => s.id === data.relatedService);
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: data.title,
+  description: data.metaDescription,
+  datePublished: data.datePublished.toISOString(),
+  ...(data.dateModified && { dateModified: data.dateModified.toISOString() }),
+  author: {
+    "@type": "Organization",
+    name: "Arqui-Médica",
+  },
+};
+---
+
+<BaseLayout
+  title={`${data.title} | Recursos Arqui-Médica`}
+  description={data.metaDescription}
+  jsonLd={jsonLd}
+>
+  <article class="bg-neutral-bg min-h-screen pb-20">
+    <header class="bg-white border-b border-neutral-border pt-24 pb-12">
+      <Container>
+        <div class="max-w-3xl mx-auto flex flex-col gap-6">
+          <a
+            href="/recursos/"
+            class="inline-flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-brand-turquoise transition-colors w-fit"
+          >
+            <ArrowLeft class="h-4 w-4" />
+            Volver a recursos
+          </a>
+
+          <h1
+            class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-brand-dark leading-tight"
+          >
+            {data.title}
+          </h1>
+
+          <div
+            class="flex flex-wrap items-center gap-4 text-sm text-slate-600 mt-2"
+          >
+            <div class="flex items-center gap-1.5">
+              <Calendar class="h-4 w-4 text-brand-turquoise" />
+              <time datetime={data.datePublished.toISOString()}>
+                {
+                  data.datePublished.toLocaleDateString("es-MX", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })
+                }
+              </time>
+            </div>
+
+            {
+              relatedService && (
+                <div class="flex items-center gap-1.5">
+                  <Tag class="h-4 w-4 text-brand-turquoise" />
+                  <a
+                    href={`/servicios/${relatedService.id}/`}
+                    class="hover:text-brand-turquoise underline underline-offset-2"
+                  >
+                    {relatedService.data.title}
+                  </a>
+                </div>
+              )
+            }
+          </div>
+        </div>
+      </Container>
+    </header>
+    <section class="py-12">
+      <Container>
+        <div
+          class="max-w-3xl mx-auto bg-white rounded-2xl p-8 md:p-12 shadow-sm border border-neutral-border"
+        >
+          <div
+            class="prose prose-slate prose-lg max-w-none prose-headings:font-heading prose-headings:font-bold prose-headings:text-brand-dark prose-a:text-brand-turquoise prose-a:no-underline hover:prose-a:underline prose-img:rounded-xl"
+          >
+            <Content />
+          </div>
+        </div>
+      </Container>
+    </section>
+    {
+      relatedService && (
+        <section class="mt-8">
+          <Container>
+            <div class="max-w-3xl mx-auto rounded-2xl bg-gradient-to-br from-brand-dark to-brand-teal-dark p-8 md:p-10 text-center flex flex-col items-center gap-6 shadow-lg">
+              <h3 class="text-2xl font-bold text-white">
+                ¿Necesitas ayuda con {relatedService.data.title}?
+              </h3>
+              <p class="text-white/80 max-w-lg">
+                Cotiza este servicio con nuestros ingenieros especialistas y
+                asegura el cumplimiento normativo de tu hospital.
+              </p>
+              <a
+                href={`/servicios/${relatedService.id}/`}
+                class="rounded-xl bg-brand-turquoise px-8 py-3.5 font-heading font-bold text-white transition-all hover:bg-brand-teal-light shadow-md hover:scale-105 mt-2"
+              >
+                Ver detalles del servicio
+              </a>
+            </div>
+          </Container>
+        </section>
+      )
+    }
+  </article>
+</BaseLayout>

@@ -1,0 +1,109 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Container from "../../components/ui/container.astro";
+import Badge from "../../components/ui/Badge.astro";
+import { ArrowRight, BookOpen } from "@lucide/astro";
+
+const recursos = await getCollection("recursos");
+const sorted = recursos.sort(
+  (a, b) => b.data.datePublished.valueOf() - a.data.datePublished.valueOf(),
+);
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  name: "Recursos y Guías Técnicas | Arqui-Médica",
+  description:
+    "Blog técnico sobre ingeniería hospitalaria, normativas COFEPRIS y diseño de instalaciones médicas en México.",
+  blogPost: sorted.map((r) => ({
+    "@type": "BlogPosting",
+    headline: r.data.title,
+    description: r.data.excerpt,
+    datePublished: r.data.datePublished.toISOString(),
+    url: `https://www.arqui-medica.com/recursos/${r.id}/`,
+  })),
+};
+---
+
+<BaseLayout
+  title="Recursos y Guías Técnicas | Arqui-Médica"
+  description="Artículos, guías y casos de estudio sobre ingeniería hospitalaria, normativas COFEPRIS (NOM-016, NOM-001) y diseño de instalaciones médicas en México."
+  jsonLd={jsonLd}
+>
+  <!-- ── HERO ── -->
+  <section
+    class="bg-brand-dark py-20 md:py-28 border-b border-white/10 relative overflow-hidden"
+  >
+    <!-- Abstract tech pattern -->
+    <div
+      class="absolute inset-0 opacity-5"
+      style="background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0); background-size: 32px 32px;"
+    >
+    </div>
+
+    <Container>
+      <div class="flex flex-col gap-6 max-w-2xl relative z-10">
+        <Badge text="Blog Técnico" variant="teal" />
+        <h1
+          class="text-4xl font-extrabold leading-tight text-white md:text-5xl"
+        >
+          Recursos y Guías Técnicas
+        </h1>
+        <p class="text-lg text-white/70">
+          Información técnica, actualizaciones normativas y mejores prácticas
+          para el diseño, construcción y certificación de instalaciones
+          hospitalarias en México.
+        </p>
+      </div>
+    </Container>
+  </section>
+
+  <!-- ── GRID DE RECURSOS ── -->
+  <section class="py-20 bg-neutral-bg min-h-[50vh]">
+    <Container>
+      {
+        sorted.length === 0 ? (
+          <div class="text-center py-20">
+            <p class="text-slate-500">
+              Aún no hay recursos publicados. Vuelve pronto.
+            </p>
+          </div>
+        ) : (
+          <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {sorted.map((recurso) => (
+              <a
+                href={`/recursos/${recurso.id}/`}
+                class="group flex flex-col h-full rounded-2xl border border-neutral-border bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:border-brand-turquoise/50 hover:shadow-lg"
+              >
+                <div class="flex items-center gap-3 mb-4 text-xs font-semibold text-slate-500">
+                  <BookOpen class="h-4 w-4 text-brand-turquoise" />
+                  <time datetime={recurso.data.datePublished.toISOString()}>
+                    {recurso.data.datePublished.toLocaleDateString("es-MX", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}
+                  </time>
+                </div>
+
+                <h2 class="text-xl font-bold text-brand-dark mb-3 group-hover:text-brand-turquoise transition-colors">
+                  {recurso.data.title}
+                </h2>
+
+                <p class="text-sm text-slate-600 leading-relaxed mb-6 line-clamp-3">
+                  {recurso.data.excerpt}
+                </p>
+
+                <div class="mt-auto flex items-center gap-2 text-sm font-semibold text-brand-teal-dark">
+                  Leer artículo completo
+                  <ArrowRight class="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </div>
+              </a>
+            ))}
+          </div>
+        )
+      }
+    </Container>
+  </section>
+</BaseLayout>

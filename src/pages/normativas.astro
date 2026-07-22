@@ -1,0 +1,151 @@
+---
+// src/pages/normativas.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Container from '../components/ui/container.astro';
+import SectionHeader from '../components/ui/SectionHeader.astro';
+import Hero from '../components/sections/hero/Hero.astro';
+import { BookOpen, ShieldAlert, CheckCircle2 } from '@lucide/astro';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  'name': 'Normativas Oficiales para Hospitales en México (NOM) | Arqui-Médica',
+  'description': 'Guía técnica sobre la normativa vigente para instalaciones hospitalarias en México (NOM-016-SSA3, NOM-001-SEDE, NOM-197-SSA1). Auditoría y cumplimiento.',
+};
+
+const normativas = [
+  {
+    id: 'nom-016-ssa3',
+    titulo: 'NOM-016-SSA3-2012',
+    descripcion: 'Características mínimas de infraestructura y equipamiento de hospitales y consultorios de atención médica especializada.',
+    impacto: 'Es la norma madre dictada por COFEPRIS. Define qué áreas debe tener el hospital, las dimensiones mínimas, las instalaciones requeridas por área (gases, eléctricas) y los acabados.',
+    servicios: ['/servicios/cumplimiento-normativo/']
+  },
+  {
+    id: 'nom-001-sede',
+    titulo: 'NOM-001-SEDE-2012 (Artículo 517)',
+    descripcion: 'Instalaciones Eléctricas (Utilización) - Centros de Atención a la Salud.',
+    impacto: 'Regula estrictamente cómo se debe cablear un hospital. Exige separación estricta de circuitos (normal, vital, crítico, equipo), tableros de aislamiento en quirófanos y tierra física redundante (EQP).',
+    servicios: ['/servicios/instalacion-electrica-hospitalaria/', '/servicios/tableros-electricos/', '/servicios/tierra-fisica/']
+  },
+  {
+    id: 'nom-197-ssa1',
+    titulo: 'NOM-197-SSA1-2000',
+    descripcion: 'Requisitos mínimos de infraestructura y equipamiento de hospitales y consultorios (referencia histórica y específica para ciertos gases y áreas).',
+    impacto: 'Aunque en parte sustituida por la NOM-016, sus apéndices normativos siguen usándose como referencia técnica para instalaciones específicas de gases medicinales y cuartos de máquinas.',
+    servicios: ['/servicios/gases-medicinales/']
+  },
+  {
+    id: 'nmx-j-136-ance',
+    titulo: 'NMX-J-136-ANCE',
+    descripcion: 'Sistemas de puesta a tierra.',
+    impacto: 'Define los métodos de medición y los valores máximos de resistencia admisible de la tierra física. Crucial para proteger equipo médico sensible y certificar que la instalación es segura para el paciente.',
+    servicios: ['/servicios/tierra-fisica/']
+  },
+  {
+    id: 'nfpa-99-110',
+    titulo: 'NFPA 99 / NFPA 110',
+    descripcion: 'Código de instalaciones para el cuidado de la salud (USA) adoptado como estándar de buenas prácticas en México.',
+    impacto: 'Referencia internacional indispensable para el diseño de sistemas de respaldo eléctrico (plantas de emergencia), sistemas de vacío y gases medicinales donde la NOM es insuficiente.',
+    servicios: ['/servicios/sistemas-de-respaldo/', '/servicios/gases-medicinales/']
+  }
+];
+---
+
+<BaseLayout
+  title="Normativa Hospitalaria en México (NOM) | Arqui-Médica"
+  description="Conoce las NOMs aplicables a la construcción y equipamiento de hospitales en México (NOM-016, NOM-001-SEDE). Te ayudamos con auditoría técnica y cumplimiento para COFEPRIS."
+  jsonLd={jsonLd}
+>
+  <Hero
+    title="Normativa para Instalaciones"
+    highlighted="Hospitalarias"
+    description="Operar un hospital o clínica en México requiere cumplir con un estricto marco normativo dictado por la Secretaría de Salud (COFEPRIS) y la SENER. Una instalación fuera de norma es motivo de clausura inmediata. Esta es una guía de las normas más críticas que auditamos, diseñamos e instalamos en Arqui-Médica."
+    badgeText="Guía de Cumplimiento Normativo"
+    showBenefits={false}
+    showActions={false}
+  />
+
+  <!-- ── LISTADO DE NORMAS (SEO HUB) ── -->
+  <section class="py-16 md:py-24 bg-white">
+    <Container>
+      <div class="grid gap-12 lg:grid-cols-3">
+        
+        <!-- Main Content -->
+        <div class="lg:col-span-2 flex flex-col gap-10">
+          {normativas.map((norma) => (
+            <div id={norma.id} class="flex flex-col gap-5 scroll-mt-24 pb-10 border-b border-neutral-border last:border-0">
+              <div class="flex items-center gap-3">
+                <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-brand-turquoise/10 text-brand-teal-dark">
+                  <BookOpen class="h-5 w-5" />
+                </div>
+                <h2 class="text-2xl font-bold text-brand-dark">{norma.titulo}</h2>
+              </div>
+              
+              <div class="flex flex-col gap-3 ml-13">
+                <h3 class="font-semibold text-slate-800 text-lg">{norma.descripcion}</h3>
+                <div class="rounded-xl bg-slate-50 p-5 border border-slate-100">
+                  <p class="text-slate-600 leading-relaxed text-sm"><strong class="text-brand-dark">Impacto en la obra:</strong> {norma.impacto}</p>
+                </div>
+              </div>
+
+              <!-- Tags de servicios relacionados -->
+              <div class="flex flex-wrap gap-2 ml-13">
+                <span class="text-xs font-semibold text-slate-500 uppercase tracking-wide flex items-center mr-2">Servicios relacionados:</span>
+                {norma.servicios.map((ruta) => {
+                  const slug = ruta.split('/').filter(Boolean).pop();
+                  const nombreFormateado = slug?.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+                  
+                  return (
+                    <a href={ruta} class="inline-flex items-center rounded-full bg-brand-turquoise/5 px-3 py-1 text-xs font-semibold text-brand-teal-dark border border-brand-turquoise/20 hover:bg-brand-turquoise hover:text-white hover:border-brand-turquoise transition-colors">
+                      {nombreFormateado}
+                    </a>
+                  )
+                })}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <!-- Sidebar / Sticky CTA -->
+        <div class="lg:col-span-1">
+          <div class="sticky top-24 flex flex-col gap-6 rounded-2xl border border-brand-turquoise/30 bg-gradient-to-br from-[#E6FCFC] to-white p-6 shadow-sm">
+            <div class="flex items-center gap-3 text-brand-teal-dark">
+              <ShieldAlert class="h-6 w-6" />
+              <h3 class="font-heading font-bold text-xl">¿Tienes una inspección en puerta?</h3>
+            </div>
+            
+            <p class="text-sm text-slate-600 leading-relaxed">
+              No esperes a que COFEPRIS o Protección Civil hagan observaciones críticas. Realizamos auditorías técnicas preventivas.
+            </p>
+            
+            <ul class="flex flex-col gap-3 text-sm text-slate-700">
+              <li class="flex items-start gap-2">
+                <CheckCircle2 class="h-5 w-5 shrink-0 text-brand-turquoise" />
+                <span>Revisión de planos y memorias as-built</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <CheckCircle2 class="h-5 w-5 shrink-0 text-brand-turquoise" />
+                <span>Mediciones de resistencia de tierra</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <CheckCircle2 class="h-5 w-5 shrink-0 text-brand-turquoise" />
+                <span>Pruebas de hermeticidad de gases</span>
+              </li>
+            </ul>
+
+            <a href="/servicios/cumplimiento-normativo/" class="mt-2 text-center rounded-xl bg-brand-teal-dark px-5 py-3.5 font-heading font-bold text-white transition-all hover:bg-brand-dark">
+              Ver servicio de Auditoría Normativa
+            </a>
+            
+            <a href="/contacto/" class="text-center text-sm font-semibold text-brand-teal-dark hover:underline">
+              Hablar con un consultor normativo
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </Container>
+  </section>
+
+</BaseLayout>

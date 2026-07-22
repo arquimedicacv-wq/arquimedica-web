@@ -1,0 +1,43 @@
+---
+interface Props{
+    eyebrow?:string;
+    title:string;
+    description?:string;
+    centered?:boolean;
+}
+
+const{
+    eyebrow,
+    title,
+    description,
+    centered=false
+}=Astro.props;
+
+const alignment=centered
+?"items-center text-center"
+:"items-start text-left";
+---
+
+<div class={`flex flex-col gap-4 ${alignment}`}>
+
+    {
+        eyebrow && (
+            <span class="text-sm font-semibold uppercase tracking-[0.2em] text-teal-600">
+                {eyebrow}
+            </span>
+        )
+    }
+
+    <h2 class="max-w-3xl text-3xl font-bold tracking-tight text-slate-900 md:text-5xl">
+        {title}
+    </h2>
+
+    {
+        description && (
+            <p class="max-w-2xl text-lg leading-8 text-slate-600">
+                {description}
+            </p>
+        )
+    }
+
+</div>

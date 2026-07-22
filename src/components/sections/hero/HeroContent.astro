@@ -1,0 +1,30 @@
+---
+import Badge from "../../ui/Badge.astro";
+import HeroBenefits from "./HeroBenefits.astro";
+import HeroActions from "./HeroActions.astro";
+
+interface Props {
+  title: string;
+  highlighted?: string;
+  description: string;
+  badgeText?: string;
+  showBenefits?: boolean;
+  showActions?: boolean;
+}
+
+const { title, highlighted, description, badgeText, showBenefits, showActions } = Astro.props;
+---
+
+<div class="space-y-8">
+  {badgeText && <Badge text={badgeText} />}
+  <div class="space-y-6">
+    <h1 class="text-4xl font-extrabold leading-tight text-slate-900 lg:text-5xl">
+      {title}{highlighted && <span class="text-teal-600"> {highlighted}</span>}
+    </h1>
+    <p class="max-w-xl text-lg leading-8 text-slate-600">
+      {description}
+    </p>
+  </div>
+  {showBenefits && <HeroBenefits />}
+  {showActions && <HeroActions />}
+</div>

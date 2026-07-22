@@ -1,0 +1,87 @@
+---
+import { getCollection } from "astro:content";
+import Card from "../ui/Card.astro";
+import Section from "../ui/Section.astro";
+import Container from "../ui/container.astro";
+import SectionHeader from "../ui/SectionHeader.astro";
+import { navServices } from "../../data/navServices";
+import * as icons from "@lucide/astro";
+
+const allServices = await getCollection("services");
+
+const serviceDescriptions: Record<string, string> = {
+  "gases-medicinales":
+    "Diseño, instalación y certificación de redes de oxígeno, aire medicinal, vacío y gases anestésicos conforme a la NOM-197-SSA1.",
+  "aire-acondicionado-grado-medico":
+    "Sistemas de climatización para quirófanos, UCI y áreas críticas con control de presión, temperatura y calidad del aire según norma.",
+  "instalacion-electrica-hospitalaria":
+    "Instalaciones eléctricas de muy alta confiabilidad para áreas médicas, con separación de circuitos y respaldo garantizado. Incluye tableros eléctricos, tierra física y sistemas de respaldo.",
+  "piso-vinilico-conductivo":
+    "Instalación de piso vinílico conductivo y antiestático para quirófanos y áreas donde se maneja equipo electromédico crítico.",
+  "cumplimiento-normativo":
+    "Auditoría, diagnóstico y adecuación de instalaciones existentes para obtener la certificación y superar inspecciones oficiales.",
+};
+
+type LucideIconName = keyof typeof icons;
+
+const iconMap: Record<string, LucideIconName> = {
+  "gases-medicinales": "Wind",
+  "aire-acondicionado-grado-medico": "Snowflake",
+  "instalacion-electrica-hospitalaria": "Zap",
+  "piso-vinilico-conductivo": "LayoutGrid",
+  "cumplimiento-normativo": "ShieldCheck",
+};
+---
+
+<Section id="servicios" class="bg-neutral-bg">
+  <Container>
+    <div
+      class="mb-14 flex flex-col gap-6 md:flex-row md:items-end md:justify-between"
+    >
+      <SectionHeader
+        eyebrow="Nuestros servicios"
+        title="Infraestructura hospitalaria especializada"
+        description="Ejecutamos cada servicio con dominio normativo completo y proceso documentado. No subcontratamos etapas críticas."
+      />
+      <a
+        href="/servicios/"
+        class="shrink-0 inline-flex items-center gap-2 rounded-lg border border-neutral-border bg-white px-5 py-2.5 text-sm font-semibold text-brand-dark transition-all hover:border-brand-turquoise hover:shadow-sm"
+      >
+        Ver todos los servicios
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-4 h-4"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M5 12h14M12 5l7 7-7 7"></path>
+        </svg>
+      </a>
+    </div>
+
+    <div class="flex flex-wrap gap-4 w-full justify-center">
+      {
+        navServices.map((service) => {
+          const serviceData = allServices.find((s) => s.id === service.slug);
+          const cardImage = serviceData?.data?.gallery?.[0]?.url;
+
+          return (
+            <div class="w-84.5 grow-0 shrink-0">
+              <Card
+                icon={iconMap[service.slug]}
+                title={service.name}
+                description={serviceDescriptions[service.slug] ?? ""}
+                href={`/servicios/${service.slug}/`}
+                image={cardImage}
+              />
+            </div>
+          );
+        })
+      }
+    </div>
+  </Container>
+</Section>

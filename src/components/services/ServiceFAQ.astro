@@ -1,0 +1,40 @@
+---
+interface FAQItem {
+  question: string;
+  answer: string;
+}
+interface Props {
+  faq: FAQItem[];
+}
+
+const { faq } = Astro.props;
+---
+
+<section class="py-16 bg-white border-b border-neutral-border">
+  <div class="max-w-7xl mx-auto px-6 lg:px-16">
+    <div class="grid gap-10 lg:grid-cols-3">
+      <div class="flex flex-col gap-4">
+        <span class="text-sm font-semibold uppercase tracking-[0.2em] text-teal-600">Preguntas frecuentes</span>
+        <h2 class="text-2xl font-bold text-brand-dark md:text-3xl">Dudas sobre este servicio</h2>
+        <p class="text-sm text-slate-500 leading-relaxed">
+          ¿Tienes otra pregunta? Escríbenos por WhatsApp, un ingeniero te responde.
+        </p>
+      </div>
+      <div class="lg:col-span-2 flex flex-col divide-y divide-neutral-border">
+        {faq.map((item, i) => (
+          <details class="group py-5 cursor-pointer" id={`service-faq-${i}`}>
+            <summary class="flex items-center justify-between gap-4 text-brand-dark font-heading font-semibold text-sm list-none select-none">
+              {item.question}
+              <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-neutral-border text-neutral-text transition-all group-open:rotate-45 group-open:border-brand-turquoise group-open:text-brand-turquoise">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 5v14M5 12h14" />
+                </svg>
+              </span>
+            </summary>
+            <p class="mt-4 text-sm text-slate-600 leading-relaxed max-w-prose">{item.answer}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

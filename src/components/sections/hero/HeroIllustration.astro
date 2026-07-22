@@ -1,0 +1,92 @@
+---
+import {
+    Pipette,
+    AirVent,
+    ShieldCheck,
+    Zap,
+    Layers,
+    Building2,
+} from "@lucide/astro";
+import ServiceBubble from "./ServiceBubble.astro";
+---
+
+<div class="relative hidden h-162.5 items-center justify-center lg:flex">
+    <!-- Glow -->
+    <div class="absolute h-125 w-125 rounded-full bg-cyan-300/20 blur-3xl">
+    </div>
+
+    <!-- Blueprint -->
+
+    <div
+        class="relative flex h-130 w-130 items-center justify-center rounded-full border border-cyan-100 bg-white shadow-2xl"
+    >
+        <!-- círculos decorativos -->
+
+        <div
+            class="absolute inset-10 rounded-full border border-dashed border-cyan-200"
+        >
+        </div>
+
+        <div class="absolute inset-24 rounded-full border border-cyan-100">
+        </div>
+
+        <div
+            class="absolute inset-36 rounded-full border border-dashed border-cyan-200"
+        >
+        </div>
+
+        <!-- Blueprint -->
+
+        <svg
+            class="absolute h-85 w-85 text-cyan-500/20"
+            viewBox="0 0 400 400"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+        >
+            <rect x="60" y="60" width="280" height="280"></rect>
+
+            <line x1="200" y1="60" x2="200" y2="340"></line>
+
+            <line x1="60" y1="200" x2="340" y2="200"></line>
+
+            <rect x="120" y="120" width="60" height="60"></rect>
+
+            <rect x="220" y="120" width="60" height="60"></rect>
+
+            <rect x="120" y="220" width="60" height="60"></rect>
+
+            <rect x="220" y="220" width="60" height="60"></rect>
+        </svg>
+
+        <!-- Centro -->
+
+        <div
+            class="relative flex h-28 w-28 items-center justify-center rounded-full bg-teal-600 text-white shadow-xl"
+        >
+            <Building2 class="h-12 w-12" />
+        </div>
+
+        <!-- Floating Cards -->
+
+        <div class="absolute left-0 top-16">
+            <ServiceBubble icon={Pipette} title="Gases" />
+        </div>
+
+        <div class="absolute right-4 top-28">
+            <ServiceBubble icon={AirVent} title="Aire Acondicionado Grado Médico" />
+        </div>
+
+        <div class="absolute right-0 bottom-10">
+            <ServiceBubble icon={Zap} title="Instalación Eléctrica Hospitalaria" />
+        </div>
+
+        <div class="absolute left-10 bottom-20">
+            <ServiceBubble icon={Layers} title="Pisos Vinílicos" />
+        </div>
+
+        <div class="absolute top-2 left-1/2 -translate-x-1/2">
+            <ServiceBubble icon={ShieldCheck} title="Cumplimiento Normativo" />
+        </div>
+    </div>
+</div>

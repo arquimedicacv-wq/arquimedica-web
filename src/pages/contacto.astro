@@ -1,0 +1,286 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Container from "../components/ui/container.astro";
+import Hero from "../components/sections/hero/Hero.astro";
+import { buildWhatsAppUrl, navServices, contact } from "../data/navServices";
+import { MapPin, Phone, Mail, Clock, MessageCircle } from "@lucide/astro";
+
+const waUrl = buildWhatsAppUrl(
+  "Hola, vi la página web y me gustaría información de sus servicios.",
+);
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  mainEntity: {
+    "@type": "MedicalBusiness",
+    name: "Arqui-Médica",
+    telephone: contact.phone,
+    email: contact.email,
+    address: {
+      "@type": "PostalAddress",
+      addressCountry: "MX",
+    },
+  },
+};
+---
+
+<BaseLayout
+  title="Contacto | Cotizaciones de Instalaciones Hospitalarias | Arqui-Médica"
+  description="Contacta a Arqui-Médica para cotizar instalaciones eléctricas, gases medicinales, aire acondicionado grado médico o cumplimiento normativo. Atención en todo México."
+  jsonLd={jsonLd}
+>
+  <Hero
+    title="Hablemos de tu proyecto"
+    description="Un ingeniero especialista resolverá tus dudas técnicas iniciales y te ayudará a definir el alcance de las instalaciones requeridas."
+    badgeText="Atención Inmediata"
+    showBenefits={false}
+    showActions={false}
+  />
+
+  <!-- ── MAIN CONTENT (GRID) ── -->
+  <section class="py-16 md:py-24 bg-neutral-bg">
+    <Container>
+      <div class="grid gap-12 lg:grid-cols-2">
+        <!-- FORMULARIO FORMSPREE -->
+        <div
+          class="rounded-2xl border border-neutral-border bg-white p-8 shadow-sm"
+        >
+          <h2 class="text-2xl font-bold text-brand-dark mb-6">
+            Envíanos un mensaje
+          </h2>
+
+          <form
+            id="contact-form"
+            action="https://formspree.io/f/mdaqller"
+            method="POST"
+            class="flex flex-col gap-5"
+          >
+            <input type="hidden" name="_subject" value="Nuevo prospecto desde Arqui-Médica (Sitio Web)" />
+
+            <div class="flex flex-col gap-2">
+              <label for="name" class="text-sm font-semibold text-slate-700"
+                >Nombre completo o Empresa</label
+              >
+              <input
+                type="text"
+                id="name"
+                name="name"
+                required
+                class="rounded-lg border border-neutral-border bg-neutral-bg px-4 py-3 text-sm focus:border-brand-turquoise focus:outline-none focus:ring-1 focus:ring-brand-turquoise transition-colors"
+                placeholder="Ej. Hospital San José"
+              />
+            </div>
+
+            <div class="grid gap-5 sm:grid-cols-2">
+              <div class="flex flex-col gap-2">
+                <label for="email" class="text-sm font-semibold text-slate-700"
+                  >Correo electrónico</label
+                >
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  required
+                  class="rounded-lg border border-neutral-border bg-neutral-bg px-4 py-3 text-sm focus:border-brand-turquoise focus:outline-none focus:ring-1 focus:ring-brand-turquoise transition-colors"
+                  placeholder="tu@correo.com"
+                />
+              </div>
+              <div class="flex flex-col gap-2">
+                <label for="phone" class="text-sm font-semibold text-slate-700"
+                  >Teléfono (opcional)</label
+                >
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  class="rounded-lg border border-neutral-border bg-neutral-bg px-4 py-3 text-sm focus:border-brand-turquoise focus:outline-none focus:ring-1 focus:ring-brand-turquoise transition-colors"
+                  placeholder="10 dígitos"
+                />
+              </div>
+            </div>
+
+            <div class="flex flex-col gap-2">
+              <label for="service" class="text-sm font-semibold text-slate-700"
+                >Servicio de interés principal</label
+              >
+              <select
+                id="service"
+                name="service"
+                class="rounded-lg border border-neutral-border bg-neutral-bg px-4 py-3 text-sm focus:border-brand-turquoise focus:outline-none focus:ring-1 focus:ring-brand-turquoise transition-colors"
+              >
+                <option value="Sin especificar"
+                  >Selecciona un servicio (opcional)</option
+                >
+                <option value="Gases Medicinales">Gases Medicinales</option>
+                <option value="Aire Acondicionado Grado Médico"
+                  >Aire Acondicionado Grado Médico</option
+                >
+                <option value="Instalacion Electrica Hospitalaria"
+                  >Instalación Eléctrica Hospitalaria</option
+                >
+                <option value="Pisos Vinilicos">Pisos Vinílicos</option>
+                <option value="Cumplimiento Normativo"
+                  >Cumplimiento Normativo (Auditoría)</option
+                >
+                <option value="Varios/Otro">Varios servicios / Otro</option>
+              </select>
+            </div>
+
+            <div class="flex flex-col gap-2">
+              <label for="message" class="text-sm font-semibold text-slate-700"
+                >Detalles del proyecto</label
+              >
+              <textarea
+                id="message"
+                name="message"
+                rows="4"
+                required
+                class="rounded-lg border border-neutral-border bg-neutral-bg px-4 py-3 text-sm focus:border-brand-turquoise focus:outline-none focus:ring-1 focus:ring-brand-turquoise transition-colors resize-none"
+                placeholder="Cuéntanos brevemente qué necesitas y en qué ciudad se ubica el proyecto..."
+              ></textarea>
+            </div>
+
+            <div id="form-success" class="hidden rounded-lg bg-green-50 border border-green-200 p-4 text-sm text-green-800">
+              Correo enviado exitosamente, nos pondremos en contacto lo antes posible.
+            </div>
+
+            <button
+              id="submit-btn"
+              type="submit"
+              class="mt-2 w-full rounded-xl bg-brand-dark px-6 py-4 font-heading font-bold text-white transition-all hover:bg-brand-teal-dark shadow-md hover:shadow-lg"
+            >
+              Enviar solicitud de cotización
+            </button>
+            <p class="text-center text-xs text-slate-500 mt-2">
+              Al enviar este formulario aceptas nuestro <a
+                href="/aviso-de-privacidad/"
+                class="underline hover:text-brand-turquoise"
+                >Aviso de Privacidad</a
+              >.
+            </p>
+          </form>
+        </div>
+
+<script>
+  const form = document.getElementById("contact-form");
+  const successMsg = document.getElementById("form-success");
+  const submitBtn = document.getElementById("submit-btn");
+
+  form?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Enviando...";
+
+    try {
+      const res = await fetch(form.action, {
+        method: "POST",
+        body: new FormData(form),
+        headers: { Accept: "application/json" },
+      });
+
+      if (res.ok) {
+        form.reset();
+        successMsg.classList.remove("hidden");
+        successMsg.scrollIntoView({ behavior: "smooth", block: "center" });
+      } else {
+        alert("Ocurrió un error al enviar el mensaje. Intenta de nuevo.");
+      }
+    } catch {
+      alert("Error de conexión. Verifica tu internet e intenta de nuevo.");
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Enviar solicitud de cotización";
+    }
+  });
+</script>
+
+        <!-- INFO DE CONTACTO DIRECTO -->
+        <div class="flex flex-col gap-8">
+          <!-- Banner WhatsApp directo (canal principal según spec) -->
+          <div
+            class="flex flex-col gap-4 rounded-2xl bg-gradient-to-br from-[#128C7E]/10 to-[#25D366]/20 border border-[#25D366]/30 p-8"
+          >
+            <div class="flex items-center gap-3">
+              <div
+                class="flex h-12 w-12 items-center justify-center rounded-full bg-[#25D366] text-white shadow-md"
+              >
+                <MessageCircle class="h-6 w-6" />
+              </div>
+              <h3 class="text-xl font-bold text-brand-dark">
+                Respuesta rápida por WhatsApp
+              </h3>
+            </div>
+            <p class="text-slate-700 leading-relaxed text-sm">
+              Es el canal más rápido. Envíanos un mensaje y un ingeniero te
+              atenderá directamente para resolver dudas o agendar una visita
+              técnica.
+            </p>
+            <a
+              href={waUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-conversion="whatsapp_click_contact_page"
+              class="inline-flex w-fit items-center gap-2 rounded-xl bg-[#25D366] px-6 py-3 font-heading font-bold text-white shadow-md transition-all hover:bg-[#128C7E] hover:scale-105"
+            >
+              Abrir WhatsApp
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-4 w-4"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M5 12h14M12 5l7 7-7 7"></path>
+              </svg>
+            </a>
+          </div>
+
+          <!-- Cards de contacto tradicional -->
+          <div class="grid gap-4 sm:grid-cols-2">
+            <div
+              class="flex flex-col gap-3 rounded-2xl border border-neutral-border bg-white p-6"
+            >
+              <Phone class="h-5 w-5 text-brand-turquoise" />
+              <h4 class="font-bold text-brand-dark">Teléfono</h4>
+              <p class="text-sm text-slate-600 font-medium">{contact.phone}</p>
+            </div>
+
+            <div
+              class="flex flex-col gap-3 rounded-2xl border border-neutral-border bg-white p-6"
+            >
+              <Mail class="h-5 w-5 text-brand-turquoise" />
+              <h4 class="font-bold text-brand-dark">Correo Electrónico</h4>
+              <p class="text-sm text-slate-600 font-medium">
+                contacto@arqui-medica.com
+              </p>
+            </div>
+
+            <div
+              class="flex flex-col gap-3 rounded-2xl border border-neutral-border bg-white p-6"
+            >
+              <Clock class="h-5 w-5 text-brand-turquoise" />
+              <h4 class="font-bold text-brand-dark">Horario de atención</h4>
+              <p class="text-sm text-slate-600">
+                Lunes a Viernes<br />9:00 AM - 6:00 PM
+              </p>
+            </div>
+
+            <div
+              class="flex flex-col gap-3 rounded-2xl border border-neutral-border bg-white p-6"
+            >
+              <MapPin class="h-5 w-5 text-brand-turquoise" />
+              <h4 class="font-bold text-brand-dark">Cobertura</h4>
+              <p class="text-sm text-slate-600">
+                Servicio a nivel nacional en toda la República Mexicana.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </section>
+</BaseLayout>

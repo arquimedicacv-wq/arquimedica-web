@@ -1,0 +1,36 @@
+---
+// src/pages/404.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Container from '../components/ui/container.astro';
+import { AlertTriangle, ArrowLeft } from '@lucide/astro';
+---
+
+<BaseLayout
+  title="Página no encontrada | Arqui-Médica"
+  description="La página que buscas no existe o ha sido movida."
+>
+  <section class="py-24 md:py-32 bg-neutral-bg min-h-[70vh] flex items-center">
+    <Container>
+      <div class="max-w-2xl mx-auto text-center flex flex-col items-center gap-6">
+        
+        <div class="flex h-24 w-24 items-center justify-center rounded-full bg-red-50 text-red-500 shadow-sm">
+          <AlertTriangle class="h-10 w-10" />
+        </div>
+        
+        <h1 class="text-4xl font-extrabold text-brand-dark md:text-5xl">
+          Error 404
+        </h1>
+        
+        <p class="text-lg text-slate-600 leading-relaxed max-w-lg mx-auto">
+          Parece que la página que estás buscando no existe, ha sido movida o la URL es incorrecta.
+        </p>
+
+        <a href="/" class="mt-4 inline-flex justify-center items-center gap-2 rounded-xl bg-brand-teal-dark px-8 py-4 font-heading font-bold text-white transition-all hover:bg-brand-dark shadow-md">
+          <ArrowLeft class="h-4 w-4" />
+          Volver a la página principal
+        </a>
+        
+      </div>
+    </Container>
+  </section>
+</BaseLayout>

@@ -1,0 +1,25 @@
+---
+import * as icons from "@lucide/astro";
+
+interface Props {
+  text: string;
+  icon?: keyof typeof icons;
+  variant?: "gold" | "teal" | "white";
+}
+
+const { text, icon = "ShieldCheck", variant = "gold" } = Astro.props;
+const Icon = icons[icon] as any;
+
+const variants: Record<string, string> = {
+  gold: "bg-brand-gold/15 text-brand-teal-dark border-brand-gold/30",
+  teal: "bg-brand-turquoise/10 text-brand-teal-dark border-brand-turquoise/30",
+  white: "bg-white/10 text-white border-white/30",
+};
+---
+
+<span
+  class={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-xs font-semibold ${variants[variant]}`}
+>
+  <Icon class="w-3.5 h-3.5" stroke-width={2} />
+  {text}
+</span>

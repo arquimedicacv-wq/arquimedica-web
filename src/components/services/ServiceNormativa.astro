@@ -1,0 +1,49 @@
+---
+import { ShieldCheck } from "@lucide/astro";
+
+interface Norma {
+  nombre: string;
+  descripcion: string;
+}
+interface Props {
+  normativa: Norma[];
+}
+
+const { normativa } = Astro.props;
+---
+
+<section class="py-16 bg-white border-b border-neutral-border">
+  <div class="max-w-7xl mx-auto px-6 lg:px-16">
+    <div class="flex flex-col gap-8">
+      <div class="flex flex-col gap-2">
+        <span
+          class="text-sm font-semibold uppercase tracking-[0.2em] text-teal-600"
+          >Marco normativo</span
+        >
+        <h2 class="text-2xl font-bold text-brand-dark md:text-3xl">
+          Normativa aplicable a este servicio
+        </h2>
+      </div>
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          normativa.map((norm) => (
+            <div class="flex flex-col gap-3 rounded-xl border border-neutral-border bg-neutral-bg p-5">
+              <div class="flex items-center gap-2">
+                <ShieldCheck
+                  class="w-4 h-4 text-brand-turquoise shrink-0"
+                  stroke-width={2}
+                />
+                <span class="font-heading font-bold text-xs text-brand-turquoise tracking-wide">
+                  {norm.nombre}
+                </span>
+              </div>
+              <p class="text-sm text-slate-600 leading-relaxed">
+                {norm.descripcion}
+              </p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
