@@ -46,7 +46,7 @@ import ServiceBubble from "./ServiceBubble.astro";
         >
             <rect x="60" y="60" width="280" height="280"></rect>
 
-            <line x1="200" y1="60" x2="200" y2="340"></line>
+            <line x1="200" y1="60" x2="200" y2="440"></line>
 
             <line x1="60" y1="200" x2="340" y2="200"></line>
 
@@ -69,19 +69,25 @@ import ServiceBubble from "./ServiceBubble.astro";
 
         <!-- Floating Cards -->
 
-        <div class="absolute left-0 top-16">
+        <div class="absolute -left-10 top-25">
             <ServiceBubble icon={Pipette} title="Gases" />
         </div>
 
-        <div class="absolute right-4 top-28">
-            <ServiceBubble icon={AirVent} title="Aire Acondicionado Grado Médico" />
+        <div class="absolute -right-35 top-28">
+            <ServiceBubble
+                icon={AirVent}
+                title="Aire Acondicionado Grado Médico"
+            />
         </div>
 
-        <div class="absolute right-0 bottom-10">
-            <ServiceBubble icon={Zap} title="Instalación Eléctrica Hospitalaria" />
+        <div class="absolute -right-25 bottom-15">
+            <ServiceBubble
+                icon={Zap}
+                title="Instalación Eléctrica Hospitalaria"
+            />
         </div>
 
-        <div class="absolute left-10 bottom-20">
+        <div class="absolute -left-10 bottom-20">
             <ServiceBubble icon={Layers} title="Pisos Vinílicos" />
         </div>
 

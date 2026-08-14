@@ -1,0 +1,594 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Container from "../components/ui/container.astro";
+import Section from "../components/ui/Section.astro";
+import SectionHeader from "../components/ui/SectionHeader.astro";
+import Hero from "../components/sections/hero/Hero.astro";
+import ProcessSteps from "../components/sections/ProcessSteps.astro";
+import CTAForm from "../components/sections/CTAForm.astro";
+import {
+  Building2,
+  Wind,
+  Zap,
+  Snowflake,
+  LayoutGrid,
+  ShieldCheck,
+  ClipboardList,
+  AlertTriangle,
+  Users,
+  FileWarning,
+  CalendarClock,
+  CheckCircle2,
+  XCircle,
+  ArrowRight,
+  MessageCircle,
+  HardHat,
+  FileText,
+  UserCheck,
+  FolderCheck,
+  Timer,
+} from "@lucide/astro";
+import { buildWhatsAppUrl, navServices } from "../data/navServices";
+
+const waUrl = buildWhatsAppUrl(
+  "Hola, quiero cotizar la ejecución integral de un proyecto hospitalario.",
+);
+
+const pains = [
+  {
+    Icon: AlertTriangle,
+    title: "Retrabajos por interferencias",
+    description:
+      "Cada gremio instala su red sin considerar la del otro. El resultado: ductos que chocan, cargas eléctricas mal balanceadas y obra destruida para corregir.",
+  },
+  {
+    Icon: Users,
+    title: "Responsabilidad difusa",
+    description:
+      "Cuando algo falla, cada contratista señala al otro. Nadie responde por el resultado completo y la obra se detiene mientras se discute quién tiene la culpa.",
+  },
+  {
+    Icon: FileWarning,
+    title: "Papelería inconclusa",
+    description:
+      "Cada proveedor entrega documentos con formatos y firmas distintas. La COFEPRIS observa la carpeta, no la obra: sin evidencia, no hay apertura.",
+  },
+  {
+    Icon: CalendarClock,
+    title: "Plazos que se multiplican",
+    description:
+      "Entre esperas de un gremio a otro, el cronograma se estira y la apertura del hospital se pospone mes tras mes, con el costo de operación detenida.",
+  },
+] as const;
+
+const scopeCards = [
+  {
+    Icon: Wind,
+    title: "Gases medicinales",
+    description:
+      "Redes de oxígeno, aire médico, vacío y gases para quirófanos, terapia intensiva y hospitalización, con pruebas de hermeticidad certificadas.",
+    href: "/servicios/gases-medicinales/",
+  },
+  {
+    Icon: Zap,
+    title: "Instalación eléctrica hospitalaria",
+    description:
+      "Tableros, sistemas de aislamiento para quirófanos, tierra física y respaldo, dimensionados para cargas críticas y continuidad de servicio.",
+    href: "/servicios/instalacion-electrica-hospitalaria/",
+  },
+  {
+    Icon: Snowflake,
+    title: "Aire acondicionado grado médico",
+    description:
+      "Control de temperatura, humedad y presurización en áreas quirúrgicas y críticas, conforme a las especificaciones de grado médico.",
+    href: "/servicios/aire-acondicionado-grado-medico/",
+  },
+  {
+    Icon: LayoutGrid,
+    title: "Pisos vinílicos conductivos",
+    description:
+      "Pisos conductivos y antiestáticos con soldadura de juntas, instalados y certificados para quirófanos y áreas de diagnóstico.",
+    href: "/servicios/piso-vinilico-conductivo/",
+  },
+  {
+    Icon: ShieldCheck,
+    title: "Cumplimiento normativo",
+    description:
+      "Aplicación de NOM-197-SSA1, NOM-001-SEDE y NOM-020-STPS, con la documentación técnica que la auditoría exige de principio a fin.",
+    href: "/servicios/cumplimiento-normativo/",
+  },
+  {
+    Icon: HardHat,
+    title: "Gerencia de obra integral",
+    description:
+      "Cronograma único, coordinación de gremios, supervisión propia y liberación de áreas por etapa. Un solo interlocutor técnico de principio a fin.",
+    href: "/contacto/",
+  },
+] as const;
+
+const constructionAreas = [
+  {
+    Icon: Building2,
+    title: "Construcción de clínicas y hospitales",
+    description:
+      "Proyectos ejecutivos y ejecución integral de unidades de atención a la salud: de la ingeniería de detalle a la construcción y liberación de áreas críticas.",
+  },
+  {
+    Icon: HardHat,
+    title: "Construcción de quirófanos",
+    description:
+      "Proyectos y construcción de quirófanos con presurización, sistemas de aislamiento eléctrico, gases medicinales y pisos conductivos, conforme a la normativa vigente.",
+  },
+  {
+    Icon: ShieldCheck,
+    title: "Equipamiento de quirófanos",
+    description:
+      "Coordinación del equipamiento de quirófanos y áreas de diagnóstico con las instalaciones: gases, energía de respaldo, climatización y carpeta de certificación.",
+  },
+] as const;
+
+const comparison = [
+  {
+    without: "5 contratistas, 5 cronogramas, 5 responsables",
+    with: "1 contrato, 1 cronograma, 1 responsable del resultado",
+  },
+  {
+    without: "Gremios que no se hablan entre sí en obra",
+    with: "Una sola ingeniería que diseña instalaciones compatibles",
+  },
+  {
+    without: "La coordinación y el riesgo son tuyos",
+    with: "Coordinamos nosotros: el riesgo de ejecución es nuestro",
+  },
+  {
+    without: "Documentación dispersa, incompleta y con formatos distintos",
+    with: "Una carpeta técnica unificada y lista para auditoría",
+  },
+  {
+    without: "Imprevistos y retrabajos que aparecen en obra",
+    with: "Presupuesto itemizado con alcance definido desde la propuesta",
+  },
+] as const;
+
+const audiences = [
+  {
+    Icon: Building2,
+    title: "Hospital en proyecto nuevo",
+    description:
+      "Ejecución llave en mano de todas las instalaciones críticas, desde la ingeniería hasta la carpeta de certificación.",
+  },
+  {
+    Icon: LayoutGrid,
+    title: "Ampliación o adecuación",
+    description:
+      "Nuevas áreas críticas sobre instalaciones existentes, con diagnóstico normativo previo de lo que ya hay.",
+  },
+  {
+    Icon: HardHat,
+    title: "Constructora o desarrolladora",
+    description:
+      "El paquete completo de instalaciones especializadas como un solo subcontrato, sin que tu equipo coordine gremios.",
+  },
+  {
+    Icon: ShieldCheck,
+    title: "Unidad con inspección próxima",
+    description:
+      "Corrección priorizada de no conformidades con un cronograma sujeto a la fecha de auditoría, no al revés.",
+  },
+] as const;
+
+const guarantees = [
+  {
+    Icon: FileText,
+    title: "Presupuesto itemizado",
+    description:
+      "Sabes qué pagas y por qué, con partidas detalladas antes de firmar. Sin sorpresas en obra.",
+  },
+  {
+    Icon: Timer,
+    title: "Cronograma con hitos",
+    description:
+      "Cada etapa tiene fecha y criterio de liberación. La obra no avanza solo por avanzar.",
+  },
+  {
+    Icon: UserCheck,
+    title: "Un solo responsable",
+    description:
+      "El resultado completo del paquete de instalaciones es nuestra responsabilidad, no la de un coordinador externo.",
+  },
+  {
+    Icon: FolderCheck,
+    title: "Carpeta técnica incluida",
+    description:
+      "Memorias, planos as-built, protocolos de prueba y manuales: entregados como parte del contrato, sin costos adicionales.",
+  },
+] as const;
+
+const faqs = [
+  {
+    q: "Ya tengo contratista de obra civil. ¿Aún así trabajan?",
+    a: "Sí. Integramos la ejecución de instalaciones especializadas con el programa de obra del contratista general. Nuestro cronograma se sincroniza con el de la obra y coordinamos accesos, secuencias y liberación de áreas para no frenar tu avance.",
+  },
+  {
+    q: "¿Pueden tomar un proyecto que otro contratista dejó a medias?",
+    a: "Sí. Realizamos primero un diagnóstico normativo del avance existente: qué cumple, qué no y qué hay que rehacer. Con eso te entregamos un plan de corrección priorizado por riesgo y un presupuesto real de lo que falta, no de lo que ya se pagó.",
+  },
+  {
+    q: "¿Cuánto tarda la cotización de un proyecto integral?",
+    a: "Con planos o información básica del proyecto, entregamos la propuesta en 3 a 5 días hábiles. Si el proyecto requiere visita técnica, coordinamos el levantamiento en campo y entregamos la propuesta dentro de los 5 días hábiles posteriores.",
+  },
+  {
+    q: "¿Es más caro contratar un solo proveedor integral?",
+    a: "Al contrario. El modelo integral elimina el margen de coordinación de terceros, los retrabajos por interferencias entre gremios y las compras urgentes de corrección. El costo total de la obra con un solo responsable casi siempre es menor, y el resultado es predecible.",
+  },
+  {
+    q: "¿Qué pasa si la COFEPRIS hace observaciones en la auditoría?",
+    a: "La carpeta técnica se estructura para superar la inspección de primer intento. Si surge una observación relacionada con lo que ejecutamos, la atendemos: no te dejamos solo en la auditoría.",
+  },
+  {
+    q: "¿Hay un alcance mínimo para el modelo integral?",
+    a: "No hay mínimo. Cotizamos desde una adecuación puntual hasta el hospital completo. El modelo integral aplica cuando dos o más especialidades conviven en el mismo espacio, que es donde más se notan los beneficios de un solo responsable.",
+  },
+  {
+    q: "¿Quién responde si algo falla durante la obra?",
+    a: "Nosotros. A diferencia del esquema por partes, en la ejecución integral no hay discusión de responsabilidades entre proveedores: el paquete de instalaciones tiene un único responsable frente a tu proyecto.",
+  },
+] as const;
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a },
+  })),
+};
+
+const serviceJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: "Proyectos Ejecutivos — Construcción de Clínicas, Hospitales y Quirófanos",
+  serviceType:
+    "Proyectos ejecutivos para construcción de clínicas, hospitales y quirófanos",
+  description:
+    "Proyectos ejecutivos para la construcción de clínicas y hospitales, la construcción de quirófanos y el equipamiento de quirófanos: diseño de instalaciones hidráulicas, sanitarias, gases medicinales, energía eléctrica, aire acondicionado y telecomunicaciones, coordinado con el equipamiento médico y listo para auditorías de COFEPRIS.",
+  provider: {
+    "@type": "MedicalBusiness",
+    name: "Arqui-Médica",
+    url: "https://www.arqui-medica.com",
+  },
+  areaServed: { "@type": "Country", name: "México" },
+};
+---
+
+<BaseLayout
+  title="Proyectos Ejecutivos | Construcción de Clínicas y Hospitales en México"
+  description="Proyectos ejecutivos para la construcción de clínicas, hospitales y quirófanos, y el equipamiento de quirófanos: instalaciones hidráulicas, sanitarias, gases medicinales, energía eléctrica y aire acondicionado grado médico, con un solo contratista responsable y carpeta técnica lista para COFEPRIS. Cotiza sin costo."
+  jsonLd={serviceJsonLd}
+>
+  <Hero
+    title="Tu proyecto hospitalario ejecutado completo,"
+    highlighted="bajo un solo contratista responsable."
+    description="Coordinamos y ejecutamos las cinco especialidades de instalaciones críticas — gases medicinales, instalación eléctrica, aire acondicionado grado médico, pisos conductivos y cumplimiento normativo — con un solo contrato, un solo cronograma y una sola carpeta técnica lista para auditorías de COFEPRIS."
+    badgeText="Ejecución integral llave en mano"
+    showBenefits={false}
+  />
+
+  <!-- ── PROYECTOS EJECUTIVOS ── -->
+  <Section class="bg-neutral-bg">
+    <Container>
+      <div class="mb-14">
+        <SectionHeader
+          eyebrow="Proyectos ejecutivos"
+          title="Construcción de clínicas, hospitales y quirófanos desde el proyecto ejecutivo"
+          description="Integramos los conceptos normativos y los procesos operativos de cada servicio para convertir tu idea en un proyecto ejecutivo certificable."
+          centered
+        />
+      </div>
+
+      <div class="mx-auto flex max-w-3xl flex-col gap-6 text-base leading-relaxed text-slate-600">
+        <p>
+          Realización de proyectos mediante el uso de diversos conceptos normativos que integran las Unidades de Atención a la Salud, así como de los diversos procesos operativos que se generan en cada servicio: usuarios, flujos, equipos, insumos, desechos, seguridad, protección civil, etc., que puedan incidir en los diferentes esquemas de solución y en el proyecto específico.
+        </p>
+        <p>
+          Diseño de los sistemas de instalaciones hidráulicas, sanitarias, de gases medicinales, de energía eléctrica, de aire acondicionado, de telecomunicaciones, de informática, control y automatización, implicados en la operación de las Unidades de Atención a la Salud, en coordinación con el equipamiento médico, a favor del confort del usuario, la habitabilidad del espacio arquitectónico y el medio ambiente.
+        </p>
+      </div>
+
+      <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {constructionAreas.map(({ Icon, title, description }) => (
+          <div
+            class="flex flex-col gap-4 rounded-2xl border border-neutral-border bg-white p-6"
+          >
+            <div class="w-10 h-10 flex items-center justify-center rounded-lg bg-brand-turquoise/10 text-brand-teal-dark">
+              <Icon class="w-5 h-5" strokeWidth={1.75} />
+            </div>
+            <h3 class="font-heading font-bold text-brand-dark">{title}</h3>
+            <p class="text-sm text-neutral-text leading-relaxed">
+              {description}
+            </p>
+          </div>
+        ))}
+      </div>
+    </Container>
+  </Section>
+
+  <!-- ── EL PROBLEMA DE COORDINAR VARIOS CONTRATISTAS ── -->
+  <Section class="bg-white">
+    <Container>
+      <div class="mb-14">
+        <SectionHeader
+          eyebrow="El costo real de contratar por partes"
+          title="Coordinar cinco contratistas tiene un precio oculto"
+          description="Cada proveedor por separado parece razonable. El problema aparece cuando sus instalaciones conviven en el mismo espacio y alguien tiene que responder por el conjunto."
+          centered
+        />
+      </div>
+
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {pains.map(({ Icon, title, description }) => (
+          <div class="flex flex-col gap-4 rounded-2xl border border-neutral-border bg-neutral-bg p-6">
+            <div class="w-10 h-10 flex items-center justify-center rounded-lg bg-red-50 text-red-500">
+              <Icon class="w-6 h-6" strokeWidth={1.75} />
+            </div>
+            <h3 class="font-heading font-bold text-brand-dark text-base">
+              {title}
+            </h3>
+            <p class="text-sm leading-relaxed text-slate-600">{description}</p>
+          </div>
+        ))}
+      </div>
+
+      <!-- CTA intermedia -->
+      <div
+        class="mt-12 rounded-2xl bg-brand-dark px-8 py-8 flex flex-col md:flex-row items-center gap-6 justify-between"
+      >
+        <div class="flex flex-col gap-2 text-center md:text-left">
+          <p class="text-white font-heading font-bold text-xl">
+            Un solo proveedor elimina los cuatro problemas.
+          </p>
+          <p class="text-white/60 text-sm">
+            Pide una evaluación preliminar de tu proyecto sin costo.
+          </p>
+        </div>
+        <a
+          href={waUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          data-conversion="whatsapp_click_proyectos_pain"
+          class="shrink-0 inline-flex items-center gap-2.5 rounded-lg bg-brand-whatsapp px-7 py-3.5 font-heading font-semibold text-white transition-all hover:scale-[1.02] hover:shadow-lg"
+        >
+          <MessageCircle class="w-5 h-5" />
+          Evaluar mi proyecto
+        </a>
+      </div>
+    </Container>
+  </Section>
+
+  <!-- ── COMPARACIÓN: POR PARTES VS. INTEGRAL ── -->
+  <Section class="bg-neutral-bg">
+    <Container>
+      <div class="mb-14">
+        <SectionHeader
+          eyebrow="La diferencia"
+          title="Dos formas de ejecutar tu proyecto"
+          description="El modelo integral no es una lista de servicios más larga: es una forma distinta de asumir la responsabilidad del resultado."
+          centered
+        />
+      </div>
+
+      <div class="overflow-x-auto rounded-2xl border border-neutral-border bg-white shadow-sm">
+        <table class="w-full min-w-[640px] text-left">
+          <thead>
+            <tr class="border-b border-neutral-border">
+              <th class="w-1/2 px-6 py-5 text-sm font-heading font-bold text-slate-500">
+                Contratando por partes
+              </th>
+              <th class="w-1/2 px-6 py-5 bg-brand-turquoise/5 text-sm font-heading font-bold text-brand-teal-dark">
+                Ejecución integral Arqui-Médica
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {comparison.map((row, i) => (
+              <tr
+                class:list={[
+                  "border-b border-neutral-border last:border-0",
+                  { "bg-neutral-bg/60": i % 2 === 1 },
+                ]}
+              >
+                <td class="px-6 py-5">
+                  <div class="flex items-start gap-3">
+                    <XCircle class="w-5 h-5 text-red-400 shrink-0 mt-0.5" />
+                    <span class="text-sm text-slate-600 leading-relaxed">
+                      {row.without}
+                    </span>
+                  </div>
+                </td>
+                <td class="px-6 py-5 bg-brand-turquoise/5">
+                  <div class="flex items-start gap-3">
+                    <CheckCircle2 class="w-5 h-5 text-brand-teal-dark shrink-0 mt-0.5" />
+                    <span class="text-sm font-medium text-brand-dark leading-relaxed">
+                      {row.with}
+                    </span>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </Container>
+  </Section>
+
+  <!-- ── ALCANCE INTEGRAL ── -->
+  <Section class="bg-white">
+    <Container>
+      <div class="mb-14">
+        <SectionHeader
+          eyebrow="Alcance integral"
+          title="Todo lo que tu obra necesita, en un solo paquete"
+          description="Cada especialidad se ejecuta con los mismos estándares y la misma normativa. No contratas instalaciones sueltas: contratas un resultado certificable."
+          centered
+        />
+      </div>
+
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {scopeCards.map(({ Icon, title, description, href }) => (
+          <a
+            href={href}
+            class="group flex flex-col gap-4 rounded-xl border border-neutral-border bg-neutral-bg p-6 transition-all hover:border-brand-turquoise/50 hover:shadow-md"
+          >
+            <div class="w-11 h-11 flex items-center justify-center rounded-lg bg-brand-turquoise/10 text-brand-teal-dark">
+              <Icon class="w-6 h-6" strokeWidth={1.75} />
+            </div>
+            <div class="flex flex-col gap-2 flex-grow">
+              <h3 class="font-heading font-bold text-brand-dark">{title}</h3>
+              <p class="text-sm text-neutral-text leading-relaxed">
+                {description}
+              </p>
+            </div>
+            <span class="text-sm font-semibold text-brand-turquoise inline-flex items-center gap-1">
+              {href === "/contacto/" ? "Solicitar información" : "Ver servicio"}
+              <ArrowRight
+                class="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1"
+              />
+            </span>
+          </a>
+        ))}
+      </div>
+    </Container>
+  </Section>
+
+  <!-- ── PROCESO ── -->
+  <ProcessSteps />
+
+  <!-- ── ¿PARA QUIÉN ES? ── -->
+  <Section class="bg-white">
+    <Container>
+      <div class="mb-14">
+        <SectionHeader
+          eyebrow="¿Este modelo es para ti?"
+          title="Diseñado para quien no quiere coordinar ni pagar por los errores de otros"
+          description="El modelo integral conviene a cualquier proyecto donde convivan dos o más especialidades. Estos son los escenarios más comunes."
+          centered
+        />
+      </div>
+
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {audiences.map(({ Icon, title, description }) => (
+          <div
+            class="flex flex-col gap-4 rounded-2xl border border-neutral-border bg-neutral-bg p-6"
+          >
+            <div class="w-10 h-10 flex items-center justify-center rounded-lg bg-brand-turquoise/10 text-brand-teal-dark">
+              <Icon class="w-5 h-5" strokeWidth={1.75} />
+            </div>
+            <h3 class="font-heading font-bold text-brand-dark text-sm">
+              {title}
+            </h3>
+            <p class="text-xs text-neutral-text leading-relaxed">
+              {description}
+            </p>
+          </div>
+        ))}
+      </div>
+    </Container>
+  </Section>
+
+  <!-- ── COMPROMISOS POR CONTRATO ── -->
+  <Section class="bg-neutral-bg">
+    <Container>
+      <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
+        <div class="flex flex-col gap-10">
+          <SectionHeader
+            eyebrow="Compromisos por contrato"
+            title="Lo que aseguramos desde la firma del contrato"
+            description="No pedimos confianza: pedimos que leas el contrato. Cada uno de estos compromisos queda escrito y es exigible."
+          />
+
+          <a
+            href="/contacto/"
+            class="inline-flex w-fit items-center gap-2 rounded-lg border border-neutral-border bg-white px-6 py-3 text-sm font-semibold text-brand-dark transition-all hover:border-brand-teal-dark hover:shadow-sm"
+          >
+            Recibir propuesta por escrito
+            <ArrowRight class="w-4 h-4" />
+          </a>
+        </div>
+
+        <div class="grid gap-5 sm:grid-cols-2">
+          {guarantees.map(({ Icon, title, description }) => (
+            <div
+              class="flex flex-col gap-3 rounded-xl border border-neutral-border bg-white p-5"
+            >
+              <div class="w-9 h-9 rounded-lg bg-brand-turquoise/10 flex items-center justify-center text-brand-teal-dark">
+                <Icon class="w-5 h-5" strokeWidth={1.75} />
+              </div>
+              <h3 class="font-heading font-bold text-sm text-brand-dark">
+                {title}
+              </h3>
+              <p class="text-xs text-neutral-text leading-relaxed">
+                {description}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <!-- ── FAQ ── -->
+  <Section class="bg-white">
+    <Container>
+      <div class="grid gap-14 lg:grid-cols-3 lg:gap-20">
+        <div class="flex flex-col gap-6">
+          <SectionHeader
+            eyebrow="Preguntas frecuentes"
+            title="Lo que preguntan antes de contratar un proyecto integral"
+            description="Respuestas directas a las dudas más comunes de directores de obra y administradores hospitalarios."
+          />
+          <a
+            href={waUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-conversion="whatsapp_click_proyectos_faq"
+            class="inline-flex w-fit items-center gap-2 rounded-lg border border-neutral-border px-5 py-2.5 text-sm font-semibold text-brand-dark transition-all hover:border-brand-teal-dark hover:shadow-sm"
+          >
+            ¿Otra duda? Escríbenos
+          </a>
+        </div>
+
+        <div class="lg:col-span-2 flex flex-col divide-y divide-neutral-border">
+          {faqs.map((item, i) => (
+            <details class="group py-5 cursor-pointer" id={`faq-${i}`}>
+              <summary class="flex items-center justify-between gap-4 text-brand-dark font-heading font-semibold text-base list-none select-none [&::-webkit-details-marker]:hidden">
+                {item.q}
+                <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-neutral-border bg-neutral-bg text-neutral-text transition-all group-open:rotate-45 group-open:border-brand-turquoise group-open:text-brand-turquoise">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-3.5 w-3.5"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M12 5v14M5 12h14" />
+                  </svg>
+                </span>
+              </summary>
+              <p class="mt-4 text-sm text-slate-600 leading-relaxed max-w-prose">
+                {item.a}
+              </p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <CTAForm />
+
+  <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
+</BaseLayout>
