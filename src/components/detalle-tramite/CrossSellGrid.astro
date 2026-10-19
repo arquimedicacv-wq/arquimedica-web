@@ -1,0 +1,38 @@
+---
+import SectionHeading from "./SectionHeading.astro";
+
+interface Props {
+  items: { title: string; href: string; description: string }[];
+}
+const { items } = Astro.props;
+---
+
+{
+  items.length > 0 && (
+    <section>
+      <SectionHeading
+        eyebrow="Ingeniería hospitalaria"
+        title="Deja tu infraestructura lista para la inspección"
+      />
+      <p class="mt-3 text-slate-600">
+        Si el diagnóstico detecta brechas en instalaciones, las resolvemos
+        nosotros:
+      </p>
+      <div class="mt-6 grid sm:grid-cols-2 gap-4">
+        {items.map((c) => (
+          <a
+            href={c.href}
+            class="group rounded-2xl border border-slate-200 p-5 transition hover:-translate-y-0.5 hover:border-brand-turquoise hover:shadow-lg"
+          >
+            <h3 class="font-bold text-brand-dark">{c.title}</h3>
+            <p class="mt-2 text-sm text-slate-600">{c.description}</p>
+            <span class="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-brand-turquoise">
+              Ver servicio
+              <span class="transition group-hover:translate-x-1">→</span>
+            </span>
+          </a>
+        ))}
+      </div>
+    </section>
+  )
+}

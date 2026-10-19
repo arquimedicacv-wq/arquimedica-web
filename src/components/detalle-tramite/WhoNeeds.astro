@@ -1,0 +1,20 @@
+---
+import SectionHeading from "./SectionHeading.astro";
+
+interface Props {
+  text: string;
+}
+const { text } = Astro.props;
+---
+
+<section>
+  <SectionHeading
+    eyebrow="Para quién es"
+    title="¿Quién necesita este trámite?"
+  />
+  <p
+    class="mt-4 rounded-2xl border-l-4 border-brand-turquoise bg-slate-50 p-5 text-slate-700 leading-relaxed"
+  >
+    {text}
+  </p>
+</section>

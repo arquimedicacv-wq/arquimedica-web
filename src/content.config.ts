@@ -1,8 +1,8 @@
-import { defineCollection, z } from 'astro:content';
-import { glob } from 'astro/loaders';
+import { defineCollection, z, reference } from "astro:content";
+import { glob } from "astro/loaders";
 
 const services = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/services' }),
+  loader: glob({ pattern: "**/*.md", base: "./src/content/services" }),
   schema: z.object({
     title: z.string(),
     metaDescription: z.string(),
@@ -15,33 +15,35 @@ const services = defineCollection({
       z.object({
         nombre: z.string(),
         descripcion: z.string(),
-      })
+      }),
     ),
     process: z.array(
       z.object({
         step: z.string(),
         description: z.string(),
-      })
+      }),
     ),
     faq: z.array(
       z.object({
         question: z.string(),
         answer: z.string(),
-      })
+      }),
     ),
     relatedServices: z.array(z.string()),
     icon: z.string(),
-    gallery: z.array(
-      z.object({
-        url: z.string(),
-        alt: z.string(),
-      })
-    ).optional(),
+    gallery: z
+      .array(
+        z.object({
+          url: z.string(),
+          alt: z.string(),
+        }),
+      )
+      .optional(),
   }),
 });
 
 const recursos = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/recursos' }),
+  loader: glob({ pattern: "**/*.md", base: "./src/content/recursos" }),
   schema: z.object({
     title: z.string(),
     metaDescription: z.string(),
@@ -51,5 +53,62 @@ const recursos = defineCollection({
     excerpt: z.string(),
   }),
 });
+const tramites = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/tramites" }),
+  schema: z.object({
+    title: z.string(),
+    shortTitle: z.string(),
+    metaTitle: z.string().max(60),
+    metaDescription: z.string().max(160),
+    primaryKeyword: z.string(),
+    secondaryKeywords: z.array(z.string()).default([]),
 
-export const collections = { services, recursos };
+    heroTitle: z.string(),
+    heroSubtitle: z.string(),
+
+    homoclave: z.string().optional(),
+    normativaAplicable: z.array(z.string()).default([]),
+    badge: z.string(),
+    order: z.number(),
+    icon: z.string().optional(),
+    whoNeeds: z.string(),
+    deliverables: z.array(z.string()),
+    requirements: z.array(z.string()),
+    timeline: z.string(),
+    commonErrors: z.array(z.string()),
+    process: z.array(
+      z.object({
+        title: z.string(),
+        description: z.string(),
+      }),
+    ),
+
+    crossSell: z
+      .array(
+        z.object({
+          service: reference("services"),
+          description: z.string(),
+        }),
+      )
+      .default([]),
+
+    relatedTramites: z.array(reference("tramites")).default([]),
+
+    faq: z
+      .array(
+        z.object({
+          question: z.string(),
+          answer: z.string(),
+        }),
+      )
+      .min(3),
+
+    whatsappMessage: z.string(),
+
+    draft: z.boolean().default(false),
+    datePublished: z.coerce.date(),
+    dateModified: z.coerce.date().optional(),
+  }),
+});
+
+export const collections = { services, recursos, tramites };

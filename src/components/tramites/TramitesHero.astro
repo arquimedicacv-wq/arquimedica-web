@@ -1,0 +1,174 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { trust } from "../../data/tramitesHub";
+
+interface Props {
+  tramites: CollectionEntry<"tramites">[];
+  generalWa: string;
+}
+const { tramites, generalWa } = Astro.props;
+
+const heroBg = [
+  "radial-gradient(60rem 30rem at 85% -10%, rgba(45,212,191,0.22), transparent 60%)",
+  "radial-gradient(40rem 25rem at -10% 110%, rgba(45,212,191,0.12), transparent 60%)",
+].join(",");
+---
+
+<section
+  class="relative isolate overflow-hidden bg-white text-brand-dark"
+  style={`background-image:${heroBg};background-size:auto,auto,44px 44px,44px 44px;`}
+>
+  <div
+    class="relative max-w-7xl mx-auto px-4 pt-16 pb-24 md:pt-24 md:pb-32 grid lg:grid-cols-12 gap-12 items-center"
+  >
+    <!-- Texto -->
+    <div class="lg:col-span-7">
+      <p
+        class="inline-flex items-center gap-2 rounded-full border border-brand-turquoise/30 bg-brand-turquoise/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-brand-turquoise"
+      >
+        <span class="relative flex h-2 w-2">
+          <span
+            class="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-turquoise opacity-60"
+          ></span>
+          <span
+            class="relative inline-flex h-2 w-2 rounded-full bg-brand-turquoise"
+          ></span>
+        </span>
+        Gestión regulatoria · Toda la República
+      </p>
+
+      <h1
+        class="mt-6 text-4xl sm:text-5xl lg:text-5xl font-extrabold leading-[1.05] tracking-tight"
+      >
+        Trámites
+        <span
+          class="bg-linear-to-r from-brand-turquoise to-emerald-300 bg-clip-text text-transparent"
+          >{" "}COFEPRIS {""}</span
+        >
+        para clínicas y hospitales, con la {" "}
+        <span class="relative whitespace-nowrap text-brand-turquoise">
+          infraestructura lista {" "}
+          <span
+            class="absolute -bottom-1 left-0 h-1 w-full rounded-full bg-brand-turquoise/40"
+            aria-hidden="true"></span>
+        </span>
+        para inspección
+      </h1>
+
+      <p
+        class="mt-6 text-lg md:text-xl text-brand-dark max-w-xl leading-relaxed"
+      >
+        Gestionamos tu <strong class="text-brand-dark"
+          >licencia sanitaria</strong
+        >
+        de principio a fin y corregimos lo que la autoridad revisa en campo:
+        <strong class="text-brand-turquoise">{" "}gases medicinales</strong>,
+        eléctrica y climatización.
+      </p>
+
+      <div class="mt-9 flex flex-col sm:flex-row gap-3">
+        <a
+          href="/contacto/?tramite=general"
+          class="group inline-flex items-center justify-center gap-2 rounded-xl bg-brand-turquoise px-7 py-4 text-base font-bold text-white shadow-lg shadow-brand-turquoise/25 transition hover:-translate-y-0.5 hover:shadow-xl focus:outline-none focus-visible:ring-4 focus-visible:ring-brand-turquoise/40"
+        >
+          Solicitar asesoría gratuita
+          <span class="transition group-hover:translate-x-1" aria-hidden="true"
+            >→</span
+          >
+        </a>
+        <a
+          href={generalWa}
+          target="_blank"
+          rel="noopener"
+          class="inline-flex items-center justify-center gap-2 rounded-xl border border-white/25 bg-brand-dark/5 px-7 py-4 text-base font-semibold backdrop-blur transition hover:bg-white/15 focus:outline-none focus-visible:ring-4 focus-visible:ring-white/30"
+        >
+          Escribir por WhatsApp
+        </a>
+      </div>
+
+      <ul class="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm text-brand-dark">
+        {
+          trust.map((t) => (
+            <li class="flex items-center gap-2">
+              <span class="text-brand-turquoise font-bold">✓</span>
+              {t}
+            </li>
+          ))
+        }
+      </ul>
+
+      <dl
+        class="mt-12 grid grid-cols-3 max-w-lg divide-x divide-white/15 border-t border-white/15 pt-6"
+      >
+        <div class="pr-4">
+          <dt class="sr-only">Tiempo de respuesta</dt>
+          <dd class="text-3xl font-extrabold text-brand-dark">&lt;24h</dd>
+          <p class="text-xs text-brand-dark">Respuesta inicial</p>
+        </div>
+        <div class="px-4">
+          <dt class="sr-only">Trámites</dt>
+          <dd class="text-3xl font-extrabold text-brand-dark">
+            {tramites.length}
+          </dd>
+          <p class="text-xs text-brand-dark">Trámites gestionados</p>
+        </div>
+        <div class="pl-4">
+          <dt class="sr-only">Cobertura</dt>
+          <dd class="text-3xl font-extrabold text-brand-dark">MX</dd>
+          <p class="text-xs text-brand-dark">Cobertura nacional</p>
+        </div>
+      </dl>
+    </div>
+
+    <aside class="lg:col-span-5">
+      <div
+        class="relative rounded-3xl border border-white/15 bg-brand-dark p-6 shadow-2xl shadow-black/30 backdrop-blur-xl"
+      >
+        <div
+          class="absolute -top-3 left-6 rounded-full bg-brand-turquoise px-3 py-1 text-xs font-bold text-dark"
+        >
+          Licencias y permisos
+        </div>
+        <h2 class="mt-3 text-lg font-bold text-white">
+          ¿Qué trámite necesitas?
+        </h2>
+        <p class="mt-1 text-sm text-white">
+          Elige el tuyo y mira requisitos, proceso y cotización.
+        </p>
+        <ol class="mt-5 space-y-2">
+          {
+            tramites.map((t, i) => (
+              <li>
+                <a
+                  href={`/tramites-cofepris/${t.id}/`}
+                  class="group flex items-center gap-4 rounded-xl border border-transparent bg-white/5 px-4 py-3 transition hover:border-brand-turquoise/50 hover:bg-white/10"
+                >
+                  <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-brand-turquoise/15 text-xs font-bold text-white ">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span class="flex-1 text-sm font-semibold text-white">
+                    {t.data.shortTitle}
+                  </span>
+                  <span
+                    aria-hidden="true"
+                    class="text-brand-teal-dark transition group-hover:translate-x-1 group-hover:text-brand-turquoise"
+                  >
+                    →
+                  </span>
+                </a>
+              </li>
+            ))
+          }
+        </ol>
+        <a
+          href={generalWa}
+          target="_blank"
+          rel="noopener"
+          class="mt-5 block rounded-xl bg-teal-500 px-4 py-3 text-center text-sm font-bold text-white transition hover:bg-brand-turquoise"
+        >
+          ¿No sabes cuál? Te orientamos gratis
+        </a>
+      </div>
+    </aside>
+  </div>
+</section>

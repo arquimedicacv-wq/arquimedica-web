@@ -1,0 +1,168 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  data: CollectionEntry<"tramites">["data"];
+  entryId: string;
+  wa: string;
+  normas: string[];
+  crossSell: { title: string }[];
+}
+const { data, entryId, wa, normas, crossSell } = Astro.props;
+
+const heroBg = [
+  "radial-gradient(60rem 30rem at 85% -10%, rgba(45,212,191,0.22), transparent 60%)",
+  "radial-gradient(40rem 25rem at -10% 110%, rgba(45,212,191,0.12), transparent 60%)",
+].join(",");
+---
+
+<section
+  class="relative isolate overflow-hidden bg-white text-brand-dark"
+  style={`background-image:${heroBg};background-size:auto,auto,44px 44px,44px 44px;`}
+>
+  <div
+    class="relative max-w-7xl mx-auto px-4 pt-6 pb-16 md:pb-24 h-screen flex flex-col justify-center"
+  >
+    <nav aria-label="Breadcrumb" class="text-sm text-brand-dark">
+      <a href="/" class="hover:text-brand-turquoise">Inicio</a>
+      <span class="mx-1">/</span>
+      <a href="/tramites-cofepris/" class="hover:text-brand-turquoise"
+        >Trámites COFEPRIS</a
+      >
+      <span class="mx-1">/</span>
+      <span class="text-brand-dark">{data.shortTitle}</span>
+    </nav>
+
+    <div class="mt-10 grid lg:grid-cols-12 gap-10 items-center">
+      <div class="lg:col-span-7">
+        <span
+          class="inline-flex items-center gap-2 rounded-full border border-brand-turquoise/30 bg-brand-turquoise/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-brand-turquoise"
+        >
+          <span class="h-1.5 w-1.5 rounded-full bg-brand-turquoise"></span>
+          {data.badge}
+        </span>
+
+        <h1
+          class="mt-5 text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-[1.1] tracking-tight"
+        >
+          {data.heroTitle}
+        </h1>
+        <p class="mt-5 text-lg text-brand-dark max-w-xl leading-relaxed">
+          {data.heroSubtitle}
+        </p>
+
+        <div class="mt-8 flex flex-col sm:flex-row gap-3">
+          <a
+            href={wa}
+            target="_blank"
+            rel="noopener"
+            class="group inline-flex items-center justify-center gap-2 rounded-xl bg-brand-turquoise px-7 py-4 font-bold text-white shadow-lg shadow-brand-turquoise/25 transition hover:-translate-y-0.5 hover:shadow-xl focus:outline-none focus-visible:ring-4 focus-visible:ring-brand-turquoise/40"
+          >
+            Cotizar mi trámite por WhatsApp
+            <span
+              class="transition group-hover:translate-x-1"
+              aria-hidden="true">→</span
+            >
+          </a>
+          <a
+            href={`/contacto/?tramite=${entryId}`}
+            class="inline-flex items-center justify-center rounded-xl border border-white/25 bg-brand-dark px-7 py-4 font-semibold backdrop-blur transition text-white hover:bg-brand-dark focus:outline-none focus-visible:ring-4 focus-visible:ring-white/30"
+          >
+            Solicitar diagnóstico gratis
+          </a>
+        </div>
+
+        <ul class="mt-7 flex flex-wrap gap-x-6 gap-y-2 text-sm text-dark">
+          <li class="flex items-center gap-2">
+            <span class="text-brand-turquoise font-bold">✓</span>
+            Diagnóstico sin costo
+          </li>
+          <li class="flex items-center gap-2">
+            <span class="text-brand-turquoise font-bold">✓</span>
+            Respuesta en menos de 24 h
+          </li>
+          <li class="flex items-center gap-2">
+            <span class="text-brand-turquoise font-bold">✓</span>
+            Cobertura nacional
+          </li>
+        </ul>
+      </div>
+
+      <!-- Ficha del trámite -->
+      <aside class="lg:col-span-5">
+        <div
+          class="relative rounded-3xl border border-white/15 bg-white/[0.07] p-6 shadow-2xl shadow-black/30 backdrop-blur-xl"
+        >
+          <div
+            class="absolute -top-3 left-6 rounded-full bg-brand-turquoise px-3 py-1 text-xs font-bold text-brand-dark"
+          >
+            Ficha del trámite
+          </div>
+
+          <dl class="mt-3 space-y-5 text-sm">
+            <div>
+              <dt
+                class="text-xs font-semibold uppercase tracking-wider text-brand-dark"
+              >
+                Dirigido a
+              </dt>
+              <dd class="mt-1 text-brand-dark line-clamp-4">
+                {data.whoNeeds}
+              </dd>
+            </div>
+
+            {
+              normas.length > 0 && (
+                <div>
+                  <dt class="text-xs font-semibold uppercase tracking-wider text-brand-dark">
+                    Normativa relacionada
+                  </dt>
+                  <dd class="mt-2 flex flex-wrap gap-2">
+                    {normas.map((n) => (
+                      <span class="rounded-md border border-white/15 bg-white/10 px-2 py-1 text-xs font-medium">
+                        {n}
+                      </span>
+                    ))}
+                  </dd>
+                </div>
+              )
+            }
+
+            {
+              data.homoclave && (
+                <div>
+                  <dt class="text-xs font-semibold uppercase tracking-wider text-brand-dark">
+                    Homoclave
+                  </dt>
+                  <dd class="mt-1 font-semibold text-brand-turquoise">
+                    {data.homoclave}
+                  </dd>
+                </div>
+              )
+            }
+
+            {
+              crossSell.length > 0 && (
+                <div>
+                  <dt class="text-xs font-semibold uppercase tracking-wider text-brand-dark">
+                    Ingeniería incluida si la necesitas
+                  </dt>
+                  <dd class="mt-1 text-brand-dark">
+                    {crossSell.map((c) => c.title).join(" · ")}
+                  </dd>
+                </div>
+              )
+            }
+          </dl>
+
+          <a
+            href="#requisitos"
+            class="mt-6 block rounded-xl bg-brand-dark px-4 py-3 text-center text-sm font-bold text-white transition hover:bg-brand-turquoise"
+          >
+            Ver requisitos y proceso ↓
+          </a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>

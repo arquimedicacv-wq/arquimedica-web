@@ -1,0 +1,31 @@
+---
+import SectionHeading from "./SectionHeading.astro";
+
+interface Props {
+  steps: { title: string; description: string }[];
+}
+const { steps } = Astro.props;
+---
+
+<section>
+  <SectionHeading eyebrow="Proceso" title="Así lo gestionamos" />
+  <ol
+    class="relative mt-8 space-y-6 before:absolute before:left-4.25 before:top-2 before:bottom-2 before:w-px before:bg-slate-200"
+  >
+    {
+      steps.map((p, i) => (
+        <li class="relative flex gap-5">
+          <span class="relative z-10 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-dark text-sm font-bold text-white ring-4 ring-white">
+            {i + 1}
+          </span>
+          <div class="pt-0.5">
+            <h3 class="font-bold text-brand-dark">{p.title}</h3>
+            <p class="mt-1 text-sm text-slate-600 leading-relaxed">
+              {p.description}
+            </p>
+          </div>
+        </li>
+      ))
+    }
+  </ol>
+</section>

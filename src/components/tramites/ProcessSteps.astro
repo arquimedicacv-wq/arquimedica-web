@@ -1,0 +1,87 @@
+---
+import { steps } from "../../data/tramitesHub";
+---
+
+<section class="relative overflow-hidden bg-slate-50">
+  <div class="max-w-6xl mx-auto px-4 py-16 md:py-24">
+    <div class="mx-auto max-w-2xl text-center">
+      <p
+        class="text-sm font-semibold uppercase tracking-wider text-brand-turquoise"
+      >
+        Proceso
+      </p>
+      <h2
+        class="mt-2 text-3xl md:text-4xl font-extrabold tracking-tight text-brand-dark"
+      >
+        Cómo trabajamos tu trámite
+      </h2>
+      <p class="mt-3 text-slate-600">
+        Cinco pasos claros, con un especialista a tu lado de principio a fin.
+      </p>
+    </div>
+
+    <div class="relative mt-14">
+      <div
+        class="absolute left-[10%] right-[10%] top-6 hidden h-0.5 bg-linear-to-r from-brand-turquoise/20 via-brand-turquoise to-brand-turquoise/20 md:block"
+        aria-hidden="true"
+      >
+      </div>
+
+      <ol
+        class="relative space-y-8 before:absolute before:bottom-6 before:left-6 before:top-6 before:w-0.5 before:-translate-x-1/2 before:bg-brand-turquoise/30 md:grid md:grid-cols-5 md:gap-6 md:space-y-0 md:before:hidden"
+      >
+        {
+          steps.map((s, i) => {
+            const isLast = i === steps.length - 1;
+            return (
+              <li class="group relative flex gap-5 md:flex-col md:items-center md:gap-0 md:text-center">
+                <span
+                  class:list={[
+                    "relative z-10 flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-base font-extrabold ring-8 ring-slate-50 transition duration-300 group-hover:scale-110",
+                    isLast
+                      ? "bg-brand-turquoise text-brand-dark shadow-lg shadow-brand-turquoise/30"
+                      : "bg-brand-dark text-white group-hover:bg-brand-turquoise group-hover:text-brand-dark",
+                  ]}
+                >
+                  {isLast ? "✓" : i + 1}
+                </span>
+                <div
+                  class:list={[
+                    "flex-1 rounded-2xl border bg-white p-5 transition duration-300 group-hover:-translate-y-1 group-hover:shadow-lg md:mt-6 md:w-full md:flex-none",
+                    isLast
+                      ? "border-brand-turquoise/50"
+                      : "border-slate-200 group-hover:border-brand-turquoise/50",
+                  ]}
+                >
+                  <span class="text-xs font-bold uppercase tracking-wider text-brand-turquoise">
+                    Paso {i + 1}
+                  </span>
+                  <h3 class="mt-1 font-bold leading-snug text-brand-dark">
+                    {s.title}
+                  </h3>
+                  <p class="mt-2 text-sm leading-relaxed text-slate-600">
+                    {s.text}
+                  </p>
+                </div>
+              </li>
+            );
+          })
+        }
+      </ol>
+    </div>
+    <div class="mt-14 flex flex-col items-center gap-3 text-center">
+      <p class="font-semibold text-brand-dark">
+        ¿Listo para empezar por el paso 1?
+      </p>
+      <a
+        href="/contacto/?tramite=general"
+        class="group inline-flex items-center gap-2 rounded-xl bg-brand-dark px-7 py-3.5 font-bold text-white transition hover:-translate-y-0.5 hover:bg-brand-turquoise hover:text-brand-dark focus:outline-none focus-visible:ring-4 focus-visible:ring-brand-turquoise/40"
+      >
+        Solicitar diagnóstico gratis
+        <span class="transition group-hover:translate-x-1" aria-hidden="true"
+          >→</span
+        >
+      </a>
+    </div>
+  </div>
+</section>

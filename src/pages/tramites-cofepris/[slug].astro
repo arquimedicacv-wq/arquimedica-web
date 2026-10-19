@@ -1,0 +1,159 @@
+---
+import { getCollection, getEntry, getEntries, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { waLink } from "../../lib/whatsapp";
+
+import TramiteHero from "../../components/detalle-tramite/TramiteHero.astro";
+import WhoNeeds from "../../components/detalle-tramite/WhoNeeds.astro";
+import Deliverables from "../../components/detalle-tramite/Deliverables.astro";
+import MidCta from "../../components/detalle-tramite/MidCta.astro";
+import Requirements from "../../components/detalle-tramite/Requirements.astro";
+import Duration from "../../components/detalle-tramite/Duration.astro";
+import CommonErrors from "../../components/detalle-tramite/CommonErrors.astro";
+import ProcessList from "../../components/detalle-tramite/ProcessList.astro";
+import CrossSellGrid from "../../components/detalle-tramite/CrossSellGrid.astro";
+import TramiteFaq from "../../components/detalle-tramite/TramiteFaq.astro";
+import RelatedTramites from "../../components/detalle-tramite/RelatedTramites.astro";
+import TramiteSidebar from "../../components/detalle-tramite/TramiteSidebar.astro";
+import TramiteFinalCta from "../../components/detalle-tramite/TramiteFinalCta.astro";
+
+const isVisible = (d: { draft: boolean }) =>
+  import.meta.env.PROD ? !d.draft : true;
+
+export async function getStaticPaths() {
+  const tramites = await getCollection("tramites", ({ data }) =>
+    import.meta.env.PROD ? !data.draft : true,
+  );
+  return tramites.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { data } = entry;
+const { Content } = await render(entry);
+
+const SITE = "https://www.arquimedica.com.mx";
+const url = `${SITE}/tramites-cofepris/${entry.id}/`;
+const wa = waLink(data.whatsappMessage);
+
+const crossSell = (
+  await Promise.all(
+    data.crossSell.map(async (c) => {
+      const s = await getEntry(c.service);
+      return s
+        ? {
+            title: s.data.title,
+            href: `/servicios/${s.id}/`,
+            description: c.description,
+          }
+        : null;
+    }),
+  )
+).filter((x): x is NonNullable<typeof x> => x !== null);
+
+const related = (await getEntries(data.relatedTramites))
+  .filter((t) => isVisible(t.data))
+  .map((t) => ({ id: t.id, shortTitle: t.data.shortTitle }));
+
+const normas = data.normativaAplicable
+  .map((n) => n.replace(/\s*\[.*?\]/g, "").trim())
+  .filter(Boolean);
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: data.title,
+    description: data.metaDescription,
+    serviceType: "Gestión de trámites ante COFEPRIS",
+    provider: { "@type": "Organization", name: "Arqui-Médica", url: SITE },
+    areaServed: { "@type": "Country", name: "México" },
+    url,
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: data.faq.map((f) => ({
+      "@type": "Question",
+      name: f.question,
+      acceptedAnswer: { "@type": "Answer", text: f.answer },
+    })),
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Inicio", item: `${SITE}/` },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Trámites COFEPRIS",
+        item: `${SITE}/tramites-cofepris/`,
+      },
+      { "@type": "ListItem", position: 3, name: data.shortTitle, item: url },
+    ],
+  },
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": jsonLd.map(({ "@context": _ctx, ...rest }) => rest),
+};
+
+const updated = (data.dateModified ?? data.datePublished).toLocaleDateString(
+  "es-MX",
+  { year: "numeric", month: "long", day: "numeric" },
+);
+---
+
+<BaseLayout
+  title={data.metaTitle}
+  description={data.metaDescription}
+  jsonLd={schema}
+>
+  <TramiteHero
+    data={data}
+    entryId={entry.id}
+    wa={wa}
+    normas={normas}
+    crossSell={crossSell}
+  />
+
+  <div class="max-w-6xl mx-auto px-4 py-14 md:py-16 grid lg:grid-cols-3 gap-12">
+    <!-- COLUMNA PRINCIPAL -->
+    <div class="lg:col-span-2 space-y-16">
+      <section
+        class="prose prose-slate max-w-none prose-strong:text-brand-dark prose-p:leading-relaxed"
+      >
+        <Content />
+      </section>
+
+      <WhoNeeds text={data.whoNeeds} />
+      <Deliverables items={data.deliverables} />
+      <MidCta wa={wa} />
+      <Requirements
+        requirements={data.requirements}
+        normativa={data.normativaAplicable}
+        homoclave={data.homoclave}
+      />
+      <Duration text={data.timeline} />
+      <CommonErrors items={data.commonErrors} />
+      <ProcessList steps={data.process} />
+      <CrossSellGrid items={crossSell} />
+      <TramiteFaq items={data.faq} />
+      <RelatedTramites items={related} />
+
+      <p class="text-xs text-slate-500">
+        La información de esta página es orientativa. Los requisitos y plazos
+        específicos se confirman en el diagnóstico inicial. Última
+        actualización: {updated}.
+      </p>
+    </div>
+
+    <TramiteSidebar wa={wa} entryId={entry.id} />
+  </div>
+
+  <TramiteFinalCta shortTitle={data.shortTitle} wa={wa} entryId={entry.id} />
+</BaseLayout>

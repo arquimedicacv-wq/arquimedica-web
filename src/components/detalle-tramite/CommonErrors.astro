@@ -1,0 +1,26 @@
+---
+import SectionHeading from "./SectionHeading.astro";
+
+interface Props {
+  items: string[];
+}
+const { items } = Astro.props;
+---
+
+<section>
+  <SectionHeading
+    eyebrow="Evita estos problemas"
+    title="Errores comunes que retrasan o frenan el trámite"
+    tone="amber"
+  />
+  <ul class="mt-6 grid sm:grid-cols-2 gap-3">
+    {
+      items.map((e) => (
+        <li class="flex gap-3 rounded-xl border border-amber-200 bg-amber-50/60 p-4 text-sm text-slate-700">
+          <span aria-hidden="true">⚠️</span>
+          <span>{e}</span>
+        </li>
+      ))
+    }
+  </ul>
+</section>

@@ -1,0 +1,30 @@
+---
+interface Props {
+  wa: string;
+}
+const { wa } = Astro.props;
+---
+
+<aside
+  class="relative overflow-hidden rounded-2xl bg-brand-dark p-7 text-white"
+>
+  <div
+    class="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-brand-turquoise/20 blur-2xl"
+    aria-hidden="true"
+  >
+  </div>
+  <p class="relative text-lg font-bold">
+    ¿Quieres saber si tu caso aplica y cuánto tardaría?
+  </p>
+  <p class="relative mt-1 text-sm text-white/70">
+    Un especialista revisa tu caso sin costo y sin compromiso.
+  </p>
+  <a
+    href={wa}
+    target="_blank"
+    rel="noopener"
+    class="relative mt-5 inline-flex items-center gap-2 rounded-xl bg-brand-turquoise px-6 py-3 text-sm font-bold text-brand-dark transition hover:-translate-y-0.5 focus:outline-none focus-visible:ring-4 focus-visible:ring-brand-turquoise/40"
+  >
+    Hablar con un especialista →
+  </a>
+</aside>

@@ -1,0 +1,28 @@
+---
+interface Props {
+  items: { id: string; shortTitle: string }[];
+}
+const { items } = Astro.props;
+---
+
+{
+  items.length > 0 && (
+    <section>
+      <h2 class="text-xl font-bold text-brand-dark">
+        Otros trámites relacionados
+      </h2>
+      <ul class="mt-4 flex flex-wrap gap-3">
+        {items.map((r) => (
+          <li>
+            <a
+              href={`/tramites-cofepris/${r.id}/`}
+              class="inline-block rounded-full border border-slate-300 px-4 py-2 text-sm transition hover:border-brand-turquoise hover:bg-brand-turquoise/10 hover:text-brand-dark"
+            >
+              {r.shortTitle}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )
+}

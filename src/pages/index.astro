@@ -12,20 +12,21 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "MedicalBusiness",
-  "name": "Arqui-Médica",
-  "description": "Especialistas en instalaciones hospitalarias: gases medicinales, aire acondicionado grado médico, instalaciones eléctricas y sistemas críticos para hospitales y clínicas en México.",
-  "url": "https://www.arqui-medica.com",
-  "areaServed": {
+  name: "Arqui-Médica",
+  description:
+    "Especialistas en instalaciones hospitalarias: gases medicinales, aire acondicionado grado médico, instalaciones eléctricas y sistemas críticos para hospitales y clínicas en México.",
+  url: "https://www.arqui-medica.com",
+  areaServed: {
     "@type": "Country",
-    "name": "México"
+    name: "México",
   },
-  "serviceType": [
+  serviceType: [
     "Instalación de gases medicinales",
     "Aire acondicionado grado médico",
     "Instalación eléctrica hospitalaria",
     "Instalación de piso vinílico conductivo",
-    "Cumplimiento normativo hospitalario"
-  ]
+    "Cumplimiento normativo hospitalario",
+  ],
 };
 ---
 
@@ -39,7 +40,7 @@ const jsonLd = {
   <ServicesGrid />
   <WhyUs />
   <ProcessSteps />
-  <NormativasHighlight />
+  <!-- <NormativasHighlight /> -->
   <CTAForm />
   <FAQ />
 </BaseLayout>

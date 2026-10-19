@@ -1,0 +1,17 @@
+---
+import SectionHeading from "./SectionHeading.astro";
+
+interface Props {
+  text: string;
+}
+const { text } = Astro.props;
+---
+
+<section>
+  <SectionHeading eyebrow="Tiempos" title="¿Cuánto tarda?" />
+  <p
+    class="mt-4 flex gap-4 rounded-2xl border border-slate-200 p-5 text-slate-600 leading-relaxed"
+  >
+    <span>{text}</span>
+  </p>
+</section>

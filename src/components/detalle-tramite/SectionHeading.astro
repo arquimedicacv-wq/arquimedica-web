@@ -1,0 +1,18 @@
+---
+interface Props {
+  eyebrow: string;
+  title: string;
+  tone?: "brand" | "amber";
+}
+const { eyebrow, title, tone = "brand" } = Astro.props;
+---
+
+<p
+  class:list={[
+    "text-xs font-semibold uppercase tracking-wider",
+    tone === "amber" ? "text-amber-600" : "text-brand-turquoise",
+  ]}
+>
+  {eyebrow}
+</p>
+<h2 class="mt-1 text-2xl md:text-3xl font-bold text-brand-dark">{title}</h2>

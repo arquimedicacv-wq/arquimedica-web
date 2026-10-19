@@ -1,0 +1,24 @@
+---
+import SectionHeading from "./SectionHeading.astro";
+
+interface Props {
+  items: string[];
+}
+const { items } = Astro.props;
+---
+
+<section>
+  <SectionHeading eyebrow="Alcance" title="Qué incluye nuestra gestión" />
+  <ul class="mt-6 grid sm:grid-cols-2 gap-3">
+    {
+      items.map((d) => (
+        <li class="flex gap-3 rounded-xl border border-slate-200 bg-white p-4 text-sm text-slate-700 transition hover:border-brand-turquoise/60 hover:shadow-sm">
+          <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-turquoise/15 text-xs font-bold text-brand-dark">
+            ✓
+          </span>
+          <span>{d}</span>
+        </li>
+      ))
+    }
+  </ul>
+</section>
