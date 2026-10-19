@@ -70,7 +70,7 @@ faq:
   - question: "¿Dan seguimiento mientras el trámite está en la autoridad?"
     answer: "Sí. Te informamos el estatus y los siguientes pasos durante todo el proceso."
 whatsappMessage: "Hola, necesito información sobre la Licencia Sanitaria para Banco de Sangre ante COFEPRIS. Mi establecimiento está en [ciudad/estado]."
-draft: true
+draft: false
 datePublished: 2026-10-19
 ---
 

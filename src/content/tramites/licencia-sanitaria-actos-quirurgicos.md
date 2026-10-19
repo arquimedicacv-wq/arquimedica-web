@@ -71,7 +71,7 @@ faq:
   - question: "¿Qué pasa si opero quirófano sin licencia?"
     answer: "Puede derivar en sanciones, suspensión de actividades y riesgo legal para el establecimiento y su personal. Lo recomendable es regularizar cuanto antes."
 whatsappMessage: "Hola, quiero iniciar el trámite de Licencia Sanitaria para Actos Quirúrgicos. Mi establecimiento está en [ciudad/estado]."
-draft: true
+draft: false
 datePublished: 2026-10-19
 ---
 

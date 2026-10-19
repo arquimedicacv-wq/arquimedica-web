@@ -66,7 +66,7 @@ faq:
   - question: "¿Atienden consultorios pequeños o solo hospitales?"
     answer: "Atendemos desde consultorios y clínicas hasta hospitales y centros de diagnóstico, en toda la República."
 whatsappMessage: "Hola, necesito información para tramitar la Licencia Sanitaria de Fuentes de Radiación (Rayos X). Mi establecimiento está en [ciudad/estado]."
-draft: true
+draft: false
 datePublished: 2026-10-19
 ---
 

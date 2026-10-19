@@ -67,7 +67,7 @@ faq:
   - question: "¿El permiso de construcción es lo mismo que la licencia sanitaria?"
     answer: "No. El permiso se relaciona con el proyecto de obra; la licencia sanitaria autoriza la operación del establecimiento. Muchos proyectos requieren ambos, en ese orden."
 whatsappMessage: "Hola, quiero cotizar el Permiso Sanitario de Construcción COFEPRIS para un proyecto de establecimiento médico. Mi proyecto está en [ciudad/estado]."
-draft: true
+draft: false
 datePublished: 2026-10-19
 ---
 

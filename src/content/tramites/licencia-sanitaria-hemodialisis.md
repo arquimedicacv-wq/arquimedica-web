@@ -64,7 +64,7 @@ faq:
   - question: "¿Trabajan fuera de la Ciudad de México?"
     answer: "Sí, tenemos cobertura en toda la República Mexicana."
 whatsappMessage: "Hola, quiero información para tramitar la Licencia Sanitaria de una unidad de Hemodiálisis. Mi establecimiento está en [ciudad/estado]."
-draft: true
+draft: false
 datePublished: 2026-10-19
 ---
 

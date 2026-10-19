@@ -63,7 +63,7 @@ faq:
   - question: "¿Dan servicio en todo el país?"
     answer: "Sí, atendemos establecimientos en toda la República Mexicana."
 whatsappMessage: "Hola, quiero información sobre la Licencia Sanitaria para Servicio de Transfusión Hospitalaria. Mi hospital está en [ciudad/estado]."
-draft: true
+draft: false
 datePublished: 2026-10-19
 ---
 
