@@ -2,6 +2,7 @@
 import { ChevronDown, Menu, X, MessageCircle } from "@lucide/astro";
 import Button from "../ui/Button.astro";
 import { navServices, buildWhatsAppUrl } from "../../data/navServices";
+import { tramitesServices } from "../../data/tramitesHub";
 
 const navLinks = [
   { href: "/", label: "Inicio" },
@@ -103,12 +104,44 @@ const navLinks = [
         >
           Normativas
         </a>
-        <a
-          href="/tramites-cofepris/"
-          class="text-sm font-medium text-brand-dark hover:text-brand-turquoise transition-colors"
-        >
-          Tramites COFEPRIS
-        </a>
+        <!-- Dropdown de tramites -->
+        <div class="relative group">
+          <a
+            href="/tramites-cofepris/"
+            class="flex items-center gap-1 text-sm font-medium text-brand-dark hover:text-brand-turquoise transition-colors"
+            aria-haspopup="true"
+          >
+            Tramites COFEPRIS
+            <ChevronDown
+              class="w-4 h-4 transition-transform duration-200 group-hover:rotate-180"
+            />
+          </a>
+
+          <div
+            class="absolute left-1/2 -translate-x-1/2 top-full pt-3 w-80 opacity-0 invisible translate-y-1 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200"
+          >
+            <div
+              class="bg-white rounded-xl border border-neutral-border shadow-lg p-3 grid grid-cols-1 gap-1"
+            >
+              {
+                tramitesServices.map((tramite) => (
+                  <a
+                    href={`/tramites-cofepris/${tramite.slug}/`}
+                    class="px-3 py-2 rounded-lg text-sm text-brand-dark hover:bg-neutral-bg hover:text-brand-turquoise transition-colors"
+                  >
+                    {tramite.name}
+                  </a>
+                ))
+              }
+              <a
+                href="/tranutes-cofepris/"
+                class="px-3 py-2 rounded-lg text-sm font-semibold text-brand-turquoise hover:bg-neutral-bg transition-colors border-t border-neutral-border mt-1 pt-3"
+              >
+                Ver todas las licencias
+              </a>
+            </div>
+          </div>
+        </div>
         <a
           href="/contacto/"
           class="text-sm font-medium text-brand-dark hover:text-brand-turquoise transition-colors"

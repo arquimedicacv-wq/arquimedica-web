@@ -29,8 +29,6 @@ requirements:
   - "Memoria descriptiva del proyecto y de los servicios que se prestarán"
   - "Identificación del propietario o representante legal"
   - "Comprobante de propiedad o posesión del inmueble"
-  - "Comprobante de pago de derechos "
-  - "Datos del responsable del proyecto "
 timeline: "El plazo depende de la completitud del expediente y de si la autoridad emite prevenciones. Plazo orientativo: 60 días hábiles. Lo estimamos con precisión en el diagnóstico inicial."
 commonErrors:
   - "Planos que no coinciden con la memoria descriptiva"

@@ -11,7 +11,7 @@ secondaryKeywords:
 heroTitle: "Licencia COFEPRIS para tu Servicio de Transfusión Hospitalaria"
 heroSubtitle: "Documentación ordenada, infraestructura revisada y seguimiento puntual para que tu servicio de transfusión opere con respaldo regulatorio."
 normativaAplicable:
-  - "NOM-253-SSA1-2012 [VERIFICAR VIGENCIA]"
+  - "NOM-253-SSA1-2012 "
 badge: "Hospitales con transfusión"
 order: 5
 whoNeeds: "Hospitales y clínicas que reciben, conservan, realizan pruebas de compatibilidad y administran componentes sanguíneos a sus pacientes."
@@ -23,12 +23,12 @@ deliverables:
   - "Atención de requerimientos hasta la resolución"
 requirements:
   - "Datos del propietario o representante legal"
-  - "Datos y documentos del responsable sanitario [CONFIRMAR perfil requerido]"
+  - "Datos y documentos del responsable sanitario"
   - "Distribución del servicio y planos del área"
   - "Relación de equipo y evidencia de mantenimiento"
   - "Procedimientos de recepción, conservación, compatibilidad y administración"
-  - "Comprobante de pago de derechos [CONFIRMAR monto vigente]"
-timeline: "Depende del hospital y de la completitud del expediente. Plazo orientativo: [CONFIRMAR según tu experiencia]. Se define en el diagnóstico inicial."
+  - "Comprobante de pago de derechos"
+timeline: "Depende del hospital y de la completitud del expediente. Plazo orientativo: 45 días habiles. Se define en el diagnóstico inicial."
 commonErrors:
   - "Procedimientos que no reflejan cómo opera realmente el servicio"
   - "Equipo de conservación sin evidencia de mantenimiento o monitoreo"

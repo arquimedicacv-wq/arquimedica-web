@@ -10,7 +10,7 @@ secondaryKeywords:
   - "licencia sanitaria obstetricia"
   - "requisitos licencia sanitaria clínica con cirugía"
 heroTitle: "Licencia Sanitaria para Actos Quirúrgicos: opera tu quirófano con respaldo legal"
-heroSubtitle: "Gestionamos el trámite y revisamos la infraestructura que COFEPRIS evalúa: gases medicinales, climatización, eléctrica y pisos del área quirúrgica."
+heroSubtitle: "Gestionamos el trámite y revisamos la infraestructura que COFEPRIS evalúa: Todo establecimiento en que se practiquen actos quirúrgicos y/u obstétricos (procedimientos ambulatorios; Reproducción Asistida) requiere la licencia sanitaria y la designación de un responsable sanitario, dicho responsable sanitario deberá será ser notificado a la autoridad a través del aviso de responsable sanitario que será integrado como parte de los requisitos de solicitud de licencia sanitaria."
 normativaAplicable:
   - "NOM-016-SSA3-2012"
 badge: "Hospitales y clínicas con cirugía"
@@ -33,8 +33,6 @@ requirements:
   - "Comprobante de pago de derechos"
 timeline: "Depende del tipo de establecimiento, de la completitud del expediente y de la carga de la autoridad. Plazo orientativo: 60 días hábiles. En el diagnóstico te damos un estimado para tu caso."
 commonErrors:
-  - "Quirófano sin pruebas ni documentación de gases medicinales"
-  - "Sistema de climatización sin evidencia de control de presión y filtración"
   - "Instalación eléctrica del área quirúrgica sin respaldo ni tierra física documentados"
   - "Manuales operativos genéricos que no reflejan al establecimiento"
   - "Responsable sanitario sin documentación completa"
@@ -50,14 +48,8 @@ process:
   - title: "Verificación y resolución"
     description: "Te preparamos para la visita, atendemos requerimientos y entregamos la resolución."
 crossSell:
-  - service: "gases-medicinales"
-    description: "Diseño, instalación y pruebas de redes de oxígeno, aire medicinal y vacío con la documentación que se revisa."
-  - service: "aire-acondicionado-grado-medico"
-    description: "Climatización de quirófanos con control de presión, temperatura y calidad del aire."
-  - service: "piso-vinilico-conductivo"
-    description: "Piso conductivo y antiestático para áreas con equipo electromédico crítico."
-  - service: "instalacion-electrica-hospitalaria"
-    description: "Circuitos separados, tierra física y respaldo para el área quirúrgica."
+  - service: ""
+    description: ""
 relatedTramites:
   - "permiso-sanitario-de-construccion"
   - "licencia-sanitaria-servicio-de-transfusion"

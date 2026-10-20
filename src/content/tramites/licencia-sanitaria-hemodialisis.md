@@ -31,7 +31,6 @@ requirements:
   - "Comprobante de pago de derechos"
 timeline: "Depende del tamaño de la unidad y la completitud del expediente. Plazo orientativo: 60 días hábiles. Lo estimamos en el diagnóstico."
 commonErrors:
-  - "Instalación eléctrica sin documentación ni respaldo adecuado"
   - "Distribución de áreas que no coincide con lo declarado"
   - "Documentación operativa genérica"
   - "Iniciar operación antes de contar con la autorización"

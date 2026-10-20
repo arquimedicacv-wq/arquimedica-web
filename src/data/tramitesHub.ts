@@ -4,6 +4,11 @@ export const trust = [
   "Asesoría personalizada",
 ];
 
+export interface Tramites {
+  slug: string;
+  name: string;
+}
+
 export const risks = [
   {
     title: "Suspensión y sanciones",
@@ -75,5 +80,32 @@ export const faq = [
     question: "¿Cuánto cuesta el servicio?",
     answer:
       "Depende del trámite y de la complejidad de tu establecimiento. El diagnóstico inicial no tiene costo y la propuesta es itemizada, para que sepas qué incluye cada concepto.",
+  },
+];
+
+export const tramitesServices: Tramites[] = [
+  {
+    slug: "permiso-sanitario-de-construccion",
+    name: "Permiso Sanitario de Construcción",
+  },
+  {
+    slug: "licencia-sanitaria-actos-quirurgicos",
+    name: "Licencia Sanitaria para Actos Quirúrgicos",
+  },
+  {
+    slug: "licencia-sanitaria-fuentes-de-radiacion",
+    name: "Licencia COFEPRIS para Rayos X",
+  },
+  {
+    slug: "licencia-sanitaria-bancos-de-sangre",
+    name: "Licencia COFEPRIS para Bancos de Sangre",
+  },
+  {
+    slug: "licencia-sanitaria-servicio-de-transfusion",
+    name: "Licencia para Servicio de Transfusión Hospitalaria",
+  },
+  {
+    slug: "licencia-sanitaria-hemodialisis",
+    name: "Licencia Sanitaria para tu Unidad de Hemodiálisis",
   },
 ];

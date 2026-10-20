@@ -19,7 +19,6 @@ whoNeeds: "Hospitales, clínicas, consultorios, centros de diagnóstico por imag
 deliverables:
   - "Diagnóstico para identificar el trámite y modalidad según tu equipo"
   - "Revisión del expediente técnico y documental"
-  - "Verificación de la instalación eléctrica y tierra física del área"
   - "Orientación sobre personal y documentación de seguridad radiológica"
   - "Ingreso del trámite y seguimiento del folio"
   - "Atención de requerimientos hasta la resolución"
@@ -32,7 +31,6 @@ requirements:
   - "Comprobante de pago de derechos"
 timeline: "Depende del tipo de equipo, la modalidad y la completitud del expediente. Plazo orientativo: 60 días hábiles. Te lo estimamos en la consulta inicial."
 commonErrors:
-  - "Instalación eléctrica del equipo sin tierra física medida ni documentada"
   - "Planos del área que no coinciden con la distribución real"
   - "Documentación técnica del equipo incompleta o desactualizada"
   - "Confundir el aviso de funcionamiento con la licencia sanitaria"
