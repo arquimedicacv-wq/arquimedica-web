@@ -53,6 +53,7 @@ const recursos = defineCollection({
     excerpt: z.string(),
   }),
 });
+
 const tramites = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/tramites" }),
   schema: z.object({
@@ -62,10 +63,8 @@ const tramites = defineCollection({
     metaDescription: z.string().max(160),
     primaryKeyword: z.string(),
     secondaryKeywords: z.array(z.string()).default([]),
-
     heroTitle: z.string(),
     heroSubtitle: z.string(),
-
     homoclave: z.string().optional(),
     normativaAplicable: z.array(z.string()).default([]),
     badge: z.string(),
@@ -82,7 +81,6 @@ const tramites = defineCollection({
         description: z.string(),
       }),
     ),
-
     crossSell: z
       .array(
         z.object({
@@ -91,9 +89,7 @@ const tramites = defineCollection({
         }),
       )
       .default([]),
-
     relatedTramites: z.array(reference("tramites")).default([]),
-
     faq: z
       .array(
         z.object({
@@ -102,13 +98,36 @@ const tramites = defineCollection({
         }),
       )
       .min(3),
-
     whatsappMessage: z.string(),
-
     draft: z.boolean().default(false),
     datePublished: z.coerce.date(),
     dateModified: z.coerce.date().optional(),
   }),
 });
 
-export const collections = { services, recursos, tramites };
+const equipo = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/equipo" }),
+  schema: z.object({
+    nombre: z.string(),
+    marca: z.string(),
+    modelo: z.string().optional(),
+    categoria: z.enum(["humanos", "veterinarios"]),
+    subcategoria: z.string(),
+    imagen: z.string(),
+    descripcionCorta: z.string(),
+    disponibilidad: z.enum(["En stock", "Bajo pedido", "Consultar"]).default("Consultar"),
+    destacado: z.boolean().default(false),
+    order: z.number().default(99),
+    whatsappMensaje: z.string().optional(),
+    especificaciones: z
+      .array(
+        z.object({
+          clave: z.string(),
+          valor: z.string(),
+        }),
+      )
+      .optional(),
+  }),
+});
+
+export const collections = { services, recursos, tramites, equipo };

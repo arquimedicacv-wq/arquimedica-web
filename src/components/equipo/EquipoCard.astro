@@ -1,0 +1,188 @@
+---
+import { ArrowRight, MessageCircle, Star } from "@lucide/astro";
+
+interface Spec {
+  clave: string;
+  valor: string;
+}
+
+interface Props {
+  id: string;
+  nombre: string;
+  marca: string;
+  modelo?: string;
+  imagen: string;
+  descripcionCorta: string;
+  subcategoria: string;
+  disponibilidad: "En stock" | "Bajo pedido" | "Consultar";
+  destacado?: boolean;
+  especificaciones?: Spec[];
+  whatsappMensaje?: string;
+}
+
+const {
+  id,
+  nombre,
+  marca,
+  modelo,
+  imagen,
+  descripcionCorta,
+  subcategoria,
+  disponibilidad,
+  destacado = false,
+  especificaciones = [],
+  whatsappMensaje,
+} = Astro.props;
+
+// Número de WhatsApp: define PUBLIC_WHATSAPP en tu .env (ej. 5215512345678)
+const WHATSAPP_NUMBER = import.meta.env.PUBLIC_WHATSAPP ?? "";
+const whatsappUrl =
+  WHATSAPP_NUMBER && whatsappMensaje
+    ? `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(whatsappMensaje)}`
+    : null;
+
+const disp: Record<Props["disponibilidad"], { dot: string; text: string }> = {
+  "En stock": { dot: "bg-emerald-500", text: "text-emerald-700" },
+  "Bajo pedido": { dot: "bg-amber-500", text: "text-amber-700" },
+  Consultar: { dot: "bg-neutral-400", text: "text-neutral-600" },
+};
+
+// Specs clave: omitimos "Tipo de equipo" (ya lo cubre la subcategoría)
+// y preferimos valores cortos, que caben bien en la tarjeta.
+const MAX_SPECS = 3;
+const MAX_LEN = 40;
+
+const candidatas = especificaciones.filter(
+  (s) => s.clave.toLowerCase() !== "tipo de equipo",
+);
+const cortas = candidatas.filter((s) => s.valor.length <= MAX_LEN);
+const specsVisibles = [
+  ...cortas,
+  ...candidatas.filter((s) => s.valor.length > MAX_LEN),
+].slice(0, MAX_SPECS);
+const specsRestantes = Math.max(candidatas.length - specsVisibles.length, 0);
+---
+
+<article
+  class="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-neutral-border bg-white shadow-sm transition-shadow duration-300 hover:border-brand-turquoise/50 hover:shadow-lg focus-within:ring-2 focus-within:ring-brand-turquoise"
+>
+  <!-- Imagen -->
+  <div
+    class="relative flex aspect-[4/3] w-full items-center justify-center overflow-hidden bg-neutral-bg"
+  >
+    <img
+      src={imagen}
+      alt={nombre}
+      width="480"
+      height="360"
+      class="h-full w-full object-contain p-4 transition-transform duration-500 group-hover:scale-105"
+      loading="lazy"
+      decoding="async"
+    />
+
+    {
+      destacado && (
+        <span class="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full bg-brand-gold px-2.5 py-1 text-xs font-bold text-brand-dark shadow-sm">
+          <Star class="h-3 w-3 fill-current" aria-hidden="true" />
+          Destacado
+        </span>
+      )
+    }
+
+    <span
+      class="absolute bottom-3 left-3 inline-flex items-center gap-1.5 rounded-full bg-white/95 px-2.5 py-1 text-xs font-semibold shadow-sm ring-1 ring-neutral-border"
+    >
+      <span
+        class={`h-2 w-2 rounded-full ${disp[disponibilidad].dot}`}
+        aria-hidden="true"></span>
+      <span class={disp[disponibilidad].text}>{disponibilidad}</span>
+    </span>
+  </div>
+
+  <div class="flex flex-grow flex-col gap-3 p-5">
+    <!-- Marca / modelo / subcategoría -->
+    <div class="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs">
+      <span class="font-bold text-brand-dark">{marca}</span>
+      {
+        modelo && (
+          <span class="rounded-md bg-neutral-bg px-1.5 py-0.5 font-medium text-neutral-text ring-1 ring-neutral-border">
+            {modelo}
+          </span>
+        )
+      }
+      <span class="ml-auto font-semibold text-brand-teal-dark"
+        >{subcategoria}</span
+      >
+    </div>
+
+    <!-- Nombre (enlace principal que cubre toda la tarjeta) -->
+    <h3 class="font-heading text-base font-bold leading-snug text-brand-dark">
+      <a
+        href={`/equipo-medico/${id}/`}
+        class="transition-colors duration-200 after:absolute after:inset-0 after:z-0 after:content-[''] group-hover:text-brand-teal-dark focus:outline-none"
+      >
+        {nombre}
+      </a>
+    </h3>
+
+    <p class="line-clamp-2 text-sm leading-relaxed text-neutral-text">
+      {descripcionCorta}
+    </p>
+
+    <!-- Especificaciones clave -->
+    {
+      specsVisibles.length > 0 && (
+        <dl class="divide-y divide-neutral-border rounded-xl border border-neutral-border bg-neutral-bg/60 text-xs">
+          {specsVisibles.map((s) => (
+            <div class="flex items-baseline justify-between gap-3 px-3 py-1.5">
+              <dt class="shrink-0 text-neutral-text">{s.clave}</dt>
+              <dd
+                class="line-clamp-1 text-right font-semibold text-brand-dark"
+                title={s.valor}
+              >
+                {s.valor}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      )
+    }
+    {
+      specsRestantes > 0 && (
+        <p class="-mt-1 text-xs text-neutral-text">
+          +{specsRestantes} especificaciones en la ficha completa
+        </p>
+      )
+    }
+
+    <!-- Acciones -->
+    <div
+      class="mt-auto flex items-center gap-2 border-t border-neutral-border pt-4"
+    >
+      <span
+        class="flex flex-1 items-center gap-1 text-sm font-semibold text-brand-turquoise"
+        aria-hidden="true"
+      >
+        Ver detalles
+        <ArrowRight
+          class="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1"
+        />
+      </span>
+
+      {
+        whatsappUrl && (
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="relative z-10 inline-flex items-center gap-1.5 rounded-full bg-brand-turquoise px-3.5 py-2 text-xs font-bold text-brand-dark transition-colors hover:bg-brand-teal-dark hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-dark"
+            aria-label={`Cotizar ${nombre} por WhatsApp`}
+          >
+            <MessageCircle class="h-4 w-4" aria-hidden="true" />
+            Cotizar
+          </a>
+        )
+      }
+    </div>
+  </div>
+</article>

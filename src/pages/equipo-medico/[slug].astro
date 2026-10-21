@@ -1,0 +1,355 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Container from "../../components/ui/container.astro";
+import { buildWhatsAppUrl } from "../../data/navServices";
+import { ArrowLeft, ChevronRight, MessageCircle, Mail } from "@lucide/astro";
+import EquipoCard from "../../components/equipo/EquipoCard.astro";
+
+export async function getStaticPaths() {
+  const productos = await getCollection("equipo");
+  return productos.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry, productos },
+  }));
+}
+
+const { entry, productos } = Astro.props;
+const { Content } = await render(entry);
+const data = entry.data;
+
+const mensajeWa =
+  data.whatsappMensaje ??
+  `Hola, me interesa cotizar: ${data.nombre} (${data.marca}${data.modelo ? " " + data.modelo : ""}).`;
+const waUrl = buildWhatsAppUrl(mensajeWa);
+
+const disp: Record<string, { dot: string; text: string; bg: string }> = {
+  "En stock": {
+    dot: "bg-emerald-500",
+    text: "text-emerald-700",
+    bg: "bg-emerald-50 border-emerald-200",
+  },
+  "Bajo pedido": {
+    dot: "bg-amber-500",
+    text: "text-amber-700",
+    bg: "bg-amber-50 border-amber-200",
+  },
+  Consultar: {
+    dot: "bg-neutral-400",
+    text: "text-neutral-600",
+    bg: "bg-neutral-100 border-neutral-200",
+  },
+};
+
+const esHumano = data.categoria === "humanos";
+const categoriaLabel = esHumano ? "Uso humano" : "Uso veterinario";
+
+// Especificaciones: destacadas (cortas) para el hero, completas para la ficha
+const specs = data.especificaciones ?? [];
+const destacadas = specs
+  .filter(
+    (s) => s.clave.toLowerCase() !== "tipo de equipo" && s.valor.length <= 40,
+  )
+  .slice(0, 4);
+
+// Relacionados: primero misma subcategoría, luego misma categoría
+const otros = productos
+  .filter((p) => p.data.categoria === data.categoria && p.id !== entry.id)
+  .sort((a, b) => {
+    const sa = a.data.subcategoria === data.subcategoria ? 0 : 1;
+    const sb = b.data.subcategoria === data.subcategoria ? 0 : 1;
+    return sa - sb || a.data.order - b.data.order;
+  });
+const relacionados = otros.slice(0, 3);
+
+// SEO: datos estructurados Product (sin offers, porque no hay precio público)
+const imagenAbsoluta = Astro.site
+  ? new URL(data.imagen, Astro.site).href
+  : data.imagen;
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Product",
+  name: data.nombre,
+  description: data.descripcionCorta,
+  image: imagenAbsoluta,
+  brand: { "@type": "Brand", name: data.marca },
+  ...(data.modelo && { model: data.modelo }),
+  category: data.subcategoria,
+  additionalProperty: specs.map((s) => ({
+    "@type": "PropertyValue",
+    name: s.clave,
+    value: s.valor,
+  })),
+};
+---
+
+<BaseLayout
+  title={`${data.nombre} | ${data.marca} | Equipo Médico — Arqui-Médica`}
+  description={data.descripcionCorta}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <!-- Breadcrumb -->
+  <div class="border-b border-neutral-border bg-neutral-bg">
+    <Container>
+      <nav
+        aria-label="Ruta de navegación"
+        class="flex items-center gap-1.5 py-3 text-sm text-neutral-text"
+      >
+        <a href="/" class="transition-colors hover:text-brand-teal-dark"
+          >Inicio</a
+        >
+        <ChevronRight class="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+        <a
+          href="/equipo-medico/"
+          class="transition-colors hover:text-brand-teal-dark">Equipo médico</a
+        >
+        <ChevronRight class="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+        <span class="truncate font-medium text-brand-dark" aria-current="page"
+          >{data.nombre}</span
+        >
+      </nav>
+    </Container>
+  </div>
+
+  <!-- Hero -->
+  <section class="bg-white py-10 lg:py-14">
+    <Container>
+      <div class="grid gap-8 lg:grid-cols-2 lg:gap-12">
+        <div
+          class="flex aspect-[4/3] items-center justify-center overflow-hidden rounded-2xl border border-neutral-border bg-neutral-bg lg:sticky lg:top-24 lg:self-start"
+        >
+          <img
+            src={data.imagen}
+            alt={data.nombre}
+            width="800"
+            height="600"
+            class="h-full w-full object-contain p-6"
+            fetchpriority="high"
+          />
+        </div>
+
+        <div class="flex flex-col gap-6">
+          <!-- Etiquetas -->
+          <div class="flex flex-wrap items-center gap-2 text-xs font-semibold">
+            <span
+              class="rounded-full border border-brand-turquoise/30 bg-brand-turquoise/10 px-3 py-1 text-brand-teal-dark"
+            >
+              {data.subcategoria}
+            </span>
+            <span
+              class={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 ${disp[data.disponibilidad].bg} ${disp[data.disponibilidad].text}`}
+            >
+              <span
+                class={`h-2 w-2 rounded-full ${disp[data.disponibilidad].dot}`}
+                aria-hidden="true"></span>
+              {data.disponibilidad}
+            </span>
+            <span
+              class={`rounded-full border px-3 py-1 ${esHumano ? "border-blue-200 bg-blue-50 text-blue-700" : "border-green-200 bg-green-50 text-green-700"}`}
+            >
+              {categoriaLabel}
+            </span>
+          </div>
+
+          <!-- Título -->
+          <div>
+            <p
+              class="mb-1 flex items-center gap-2 text-sm font-semibold text-neutral-text"
+            >
+              {data.marca}
+              {
+                data.modelo && (
+                  <span class="rounded-md bg-neutral-bg px-2 py-0.5 text-xs ring-1 ring-neutral-border">
+                    Modelo {data.modelo}
+                  </span>
+                )
+              }
+            </p>
+            <h1
+              class="font-heading text-3xl font-extrabold leading-tight text-brand-dark lg:text-4xl"
+            >
+              {data.nombre}
+            </h1>
+          </div>
+
+          <p class="text-base leading-relaxed text-slate-600">
+            {data.descripcionCorta}
+          </p>
+
+          <!-- Características destacadas -->
+          {
+            destacadas.length > 0 && (
+              <dl class="grid gap-3 sm:grid-cols-2">
+                {destacadas.map((s) => (
+                  <div class="rounded-xl border border-neutral-border bg-neutral-bg px-4 py-3">
+                    <dt class="text-xs text-neutral-text">{s.clave}</dt>
+                    <dd class="mt-0.5 text-sm font-semibold text-brand-dark">
+                      {s.valor}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            )
+          }
+
+          <!-- CTAs -->
+          <div class="flex flex-col gap-3 pt-2 sm:flex-row">
+            <a
+              href={waUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-conversion={`whatsapp_click_equipo_${entry.id}`}
+              class="inline-flex items-center justify-center gap-2.5 rounded-xl bg-brand-whatsapp px-7 py-4 font-heading font-bold text-white shadow-sm transition-all hover:scale-[1.02] hover:shadow-md"
+            >
+              <MessageCircle class="h-5 w-5" aria-hidden="true" />
+              Cotizar por WhatsApp
+            </a>
+            <a
+              href="/contacto/"
+              class="inline-flex items-center justify-center gap-2 rounded-xl border border-neutral-border bg-white px-6 py-4 font-heading font-semibold text-brand-dark transition-all hover:border-brand-teal-dark hover:shadow-sm"
+            >
+              <Mail class="h-5 w-5" aria-hidden="true" />
+              Formulario de contacto
+            </a>
+          </div>
+          <p class="-mt-2 text-xs text-neutral-text">
+            Te respondemos con precio, disponibilidad y tiempos de entrega.
+          </p>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- Descripción + ficha técnica -->
+  <section class="border-y border-neutral-border bg-neutral-bg py-12 lg:py-16">
+    <Container>
+      <div class="grid gap-10 lg:grid-cols-[minmax(0,1fr)_360px] lg:gap-14">
+        <div>
+          <h2 class="mb-6 font-heading text-2xl font-bold text-brand-dark">
+            Descripción del producto
+          </h2>
+          <div
+            class="prose prose-slate max-w-none prose-headings:font-heading prose-headings:text-brand-dark prose-h2:hidden prose-h3:mt-10 prose-h3:text-xl prose-a:text-brand-teal-dark prose-li:marker:text-brand-turquoise"
+          >
+            <Content />
+          </div>
+        </div>
+
+        <aside class="lg:sticky lg:top-24 lg:self-start">
+          <div
+            class="overflow-hidden rounded-2xl border border-neutral-border bg-white shadow-sm"
+          >
+            <div class="border-b border-neutral-border px-5 py-4">
+              <h2 class="font-heading text-base font-bold text-brand-dark">
+                Ficha técnica
+              </h2>
+            </div>
+
+            <dl class="divide-y divide-neutral-border text-sm">
+              <div class="px-5 py-3">
+                <dt class="text-xs text-neutral-text">Marca</dt>
+                <dd class="font-semibold text-brand-dark">{data.marca}</dd>
+              </div>
+              {
+                data.modelo && (
+                  <div class="px-5 py-3">
+                    <dt class="text-xs text-neutral-text">Modelo</dt>
+                    <dd class="font-semibold text-brand-dark">{data.modelo}</dd>
+                  </div>
+                )
+              }
+              {
+                specs.map((s) => (
+                  <div class="px-5 py-3">
+                    <dt class="text-xs text-neutral-text">{s.clave}</dt>
+                    <dd class="font-medium text-brand-dark">{s.valor}</dd>
+                  </div>
+                ))
+              }
+            </dl>
+
+            <div class="border-t border-neutral-border bg-neutral-bg p-4">
+              <a
+                href={waUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-conversion={`whatsapp_click_equipo_ficha_${entry.id}`}
+                class="flex w-full items-center justify-center gap-2 rounded-xl bg-brand-whatsapp px-5 py-3 font-heading text-sm font-bold text-white transition-all hover:shadow-md"
+              >
+                <MessageCircle class="h-4 w-4" aria-hidden="true" />
+                Solicitar cotización
+              </a>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </Container>
+  </section>
+
+  <!-- Relacionados -->
+  {
+    relacionados.length > 0 && (
+      <section class="bg-white py-12 lg:py-16">
+        <Container>
+          <div class="mb-6 flex items-end justify-between gap-4">
+            <h2 class="font-heading text-xl font-bold text-brand-dark">
+              Otros equipos {esHumano ? "para uso humano" : "veterinarios"}
+            </h2>
+            <a
+              href="/equipo-medico/"
+              class="hidden text-sm font-semibold text-brand-teal-dark transition-colors hover:text-brand-dark sm:block"
+            >
+              Ver todo el catálogo
+            </a>
+          </div>
+          <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {relacionados.map((p) => (
+              <EquipoCard
+                id={p.id}
+                nombre={p.data.nombre}
+                marca={p.data.marca}
+                modelo={p.data.modelo}
+                imagen={p.data.imagen}
+                descripcionCorta={p.data.descripcionCorta}
+                subcategoria={p.data.subcategoria}
+                disponibilidad={p.data.disponibilidad}
+                destacado={p.data.destacado}
+                especificaciones={p.data.especificaciones}
+                whatsappMensaje={p.data.whatsappMensaje}
+              />
+            ))}
+          </div>
+        </Container>
+      </section>
+    )
+  }
+
+  <div class="border-t border-neutral-border bg-neutral-bg py-6 pb-24 lg:pb-6">
+    <Container>
+      <a
+        href="/equipo-medico/"
+        class="inline-flex items-center gap-2 text-sm font-semibold text-brand-teal-dark transition-colors hover:text-brand-dark"
+      >
+        <ArrowLeft class="h-4 w-4" aria-hidden="true" />
+        Ver todo el catálogo
+      </a>
+    </Container>
+  </div>
+
+  <!-- Barra de cotización fija en móvil -->
+  <div
+    class="fixed inset-x-0 bottom-0 z-40 border-t border-neutral-border bg-white/95 px-4 py-3 shadow-[0_-4px_16px_rgba(0,0,0,0.06)] backdrop-blur lg:hidden"
+  >
+    <a
+      href={waUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      data-conversion={`whatsapp_click_equipo_sticky_${entry.id}`}
+      class="flex w-full items-center justify-center gap-2 rounded-xl bg-brand-whatsapp px-5 py-3.5 font-heading font-bold text-white"
+    >
+      <MessageCircle class="h-5 w-5" aria-hidden="true" />
+      Cotizar por WhatsApp
+    </a>
+  </div>
+</BaseLayout>
