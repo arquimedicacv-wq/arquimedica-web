@@ -6,6 +6,7 @@ categoria: "veterinarios"
 subcategoria: "Ultrasonido"
 imagen: "/images/equipo/ultrasonido-portatil-veterinario-mindray-dp-10-vet.png"
 descripcionCorta: "Ultrasonido portátil veterinario Mindray DP-10 Vet en blanco y negro, con monitor LED de 12.1 pulgadas, modos B y M y disco de estado sólido de 8 GB."
+precio: 64999
 disponibilidad: "En stock"
 destacado: false
 order: 1

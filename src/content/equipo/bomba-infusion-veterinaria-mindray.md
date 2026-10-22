@@ -6,6 +6,7 @@ categoria: "veterinarios"
 subcategoria: "Bombas de infusión"
 imagen: "/images/equipo/bomba-infusion-veterinaria-mindray-anifm-i1.png"
 descripcionCorta: "Bomba de infusión veterinaria Mindray AniFM I1 con compensación de fatiga del tubo, detección de burbujas de 5 niveles y montaje en mesa, poste o jaula."
+precio: 13000
 disponibilidad: "En stock"
 destacado: false
 order: 1

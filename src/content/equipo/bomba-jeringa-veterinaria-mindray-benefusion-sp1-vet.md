@@ -6,6 +6,7 @@ categoria: "veterinarios"
 subcategoria: "Bombas de infusión"
 imagen: "/images/equipo/bomba-jeringa-veterinaria-mindray-benefusion-sp1-vet.png"
 descripcionCorta: "Bomba de jeringa veterinaria Mindray BeneFusion SP1 Vet para administrar medicamentos y fluidos con control de velocidad en clínicas y hospitales veterinarios."
+precio: 13000
 disponibilidad: "En stock"
 destacado: false
 order: 1

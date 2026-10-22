@@ -6,25 +6,27 @@ const { subcategorias } = Astro.props;
 ---
 
 <div id="equipo-filters" class="flex flex-col gap-4">
-  <div class="flex flex-wrap gap-2 p-1 bg-neutral-bg rounded-xl border border-neutral-border w-fit">
+  <div
+    class="flex flex-wrap gap-2 p-1 bg-neutral-bg rounded-xl border border-neutral-border w-fit"
+  >
     <button
       data-filter-cat="todos"
       id="btn-cat-todos"
-      class="filter-cat-btn px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 bg-white text-brand-dark shadow-sm"
+      class="filter-cat-btn cursor-pointer px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 bg-white text-brand-dark shadow-sm"
     >
       Todos
     </button>
     <button
       data-filter-cat="humanos"
       id="btn-cat-humanos"
-      class="filter-cat-btn px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 text-neutral-text hover:text-brand-dark"
+      class="filter-cat-btn cursor-pointer px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 text-neutral-text hover:text-brand-dark"
     >
       Productos Humanos
     </button>
     <button
       data-filter-cat="veterinarios"
       id="btn-cat-veterinarios"
-      class="filter-cat-btn px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 text-neutral-text hover:text-brand-dark"
+      class="filter-cat-btn cursor-pointer px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 text-neutral-text hover:text-brand-dark"
     >
       Productos Veterinarios
     </button>
@@ -37,14 +39,16 @@ const { subcategorias } = Astro.props;
     >
       Todas las categorias
     </button>
-    {subcategorias.map((sub) => (
-      <button
-        data-filter-sub={sub}
-        class="filter-sub-btn px-3 py-1.5 rounded-full text-xs font-semibold border border-neutral-border text-neutral-text hover:border-brand-turquoise hover:text-brand-teal-dark transition-all duration-200"
-      >
-        {sub}
-      </button>
-    ))}
+    {
+      subcategorias.map((sub) => (
+        <button
+          data-filter-sub={sub}
+          class="filter-sub-btn px-3 cursor-pointer py-1.5 rounded-full text-xs font-semibold border border-neutral-border text-neutral-text hover:border-brand-turquoise hover:text-brand-teal-dark transition-all duration-200"
+        >
+          {sub}
+        </button>
+      ))
+    }
   </div>
 </div>
 
@@ -62,7 +66,9 @@ const { subcategorias } = Astro.props;
   const countEl = document.getElementById("count-num");
 
   function updateCount() {
-    const visible = document.querySelectorAll("[data-equipo-card]:not(.hidden)").length;
+    const visible = document.querySelectorAll(
+      "[data-equipo-card]:not(.hidden)",
+    ).length;
     if (countEl) countEl.textContent = String(visible);
   }
 
@@ -77,31 +83,43 @@ const { subcategorias } = Astro.props;
     updateCount();
   }
 
-  document.querySelectorAll<HTMLButtonElement>(".filter-cat-btn").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      activeCat = btn.dataset.filterCat ?? "todos";
-      document.querySelectorAll(".filter-cat-btn").forEach((b) => {
-        b.classList.remove("bg-white", "text-brand-dark", "shadow-sm");
-        b.classList.add("text-neutral-text");
+  document
+    .querySelectorAll<HTMLButtonElement>(".filter-cat-btn")
+    .forEach((btn) => {
+      btn.addEventListener("click", () => {
+        activeCat = btn.dataset.filterCat ?? "todos";
+        document.querySelectorAll(".filter-cat-btn").forEach((b) => {
+          b.classList.remove("bg-white", "text-brand-dark", "shadow-sm");
+          b.classList.add("text-neutral-text");
+        });
+        btn.classList.add("bg-white", "text-brand-dark", "shadow-sm");
+        btn.classList.remove("text-neutral-text");
+        applyFilters();
       });
-      btn.classList.add("bg-white", "text-brand-dark", "shadow-sm");
-      btn.classList.remove("text-neutral-text");
-      applyFilters();
     });
-  });
 
-  document.querySelectorAll<HTMLButtonElement>(".filter-sub-btn").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      activeSub = btn.dataset.filterSub ?? "todas";
-      document.querySelectorAll(".filter-sub-btn").forEach((b) => {
-        b.classList.remove("border-brand-turquoise", "bg-brand-turquoise", "text-white");
-        b.classList.add("border-neutral-border", "text-neutral-text");
+  document
+    .querySelectorAll<HTMLButtonElement>(".filter-sub-btn")
+    .forEach((btn) => {
+      btn.addEventListener("click", () => {
+        activeSub = btn.dataset.filterSub ?? "todas";
+        document.querySelectorAll(".filter-sub-btn").forEach((b) => {
+          b.classList.remove(
+            "border-brand-turquoise",
+            "bg-brand-turquoise",
+            "text-white",
+          );
+          b.classList.add("border-neutral-border", "text-neutral-text");
+        });
+        btn.classList.add(
+          "border-brand-turquoise",
+          "bg-brand-turquoise",
+          "text-white",
+        );
+        btn.classList.remove("border-neutral-border", "text-neutral-text");
+        applyFilters();
       });
-      btn.classList.add("border-brand-turquoise", "bg-brand-turquoise", "text-white");
-      btn.classList.remove("border-neutral-border", "text-neutral-text");
-      applyFilters();
     });
-  });
 
   updateCount();
 </script>

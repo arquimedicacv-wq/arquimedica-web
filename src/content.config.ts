@@ -115,6 +115,7 @@ const equipo = defineCollection({
     subcategoria: z.string(),
     imagen: z.string(),
     descripcionCorta: z.string(),
+    precio: z.number().optional(),
     disponibilidad: z.enum(["En stock", "Bajo pedido", "Consultar"]).default("Consultar"),
     destacado: z.boolean().default(false),
     order: z.number().default(99),

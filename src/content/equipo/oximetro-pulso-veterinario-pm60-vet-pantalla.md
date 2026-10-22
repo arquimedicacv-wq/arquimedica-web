@@ -6,6 +6,7 @@ categoria: "veterinarios"
 subcategoria: "Oximetría"
 imagen: "/images/equipo/oximetro-pulso-veterinario-mindray-pm-60-vet.png"
 descripcionCorta: "Oxímetro de pulso veterinario Mindray PM-60 Vet, compacto y ligero, con pantalla TFT a color de 2.4 pulgadas, modo puntual y continuo y memoria de pacientes."
+precio: 10600
 disponibilidad: "En stock"
 destacado: false
 order: 1

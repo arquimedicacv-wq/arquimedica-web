@@ -6,6 +6,7 @@ categoria: "veterinarios"
 subcategoria: "Anestesia"
 imagen: "/images/equipo/maquina-anestesia-veterinaria-mindray-veta-3x.png"
 descripcionCorta: "Máquina de anestesia veterinaria Mindray Veta 3X con vaporizador sin energía eléctrica, conmutador ACGO y absorbedor de CO2 de un clic para clínicas y hospitales."
+precio: 59640
 disponibilidad: "En stock"
 destacado: false
 order: 1

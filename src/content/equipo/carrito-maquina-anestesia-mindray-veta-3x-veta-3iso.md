@@ -6,6 +6,7 @@ categoria: "veterinarios"
 subcategoria: "Anestesia"
 imagen: "/images/equipo/carrito.png"
 descripcionCorta: "Carrito móvil con ruedas con freno para máquinas de anestesia veterinaria Mindray Veta 3X, Veta 3ISO y Veta 3XV, con espacio para monitor y accesorios."
+precio: 5359
 disponibilidad: "En stock"
 destacado: false
 order: 1

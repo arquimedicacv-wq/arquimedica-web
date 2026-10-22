@@ -6,6 +6,7 @@ categoria: "veterinarios"
 subcategoria: "Electrocardiografía"
 imagen: "/images/equipo/electrocardiografo-veterinario-1-canal-xignal.png"
 descripcionCorta: "Electrocardiógrafo veterinario de 1 canal Xignal para el registro de la actividad eléctrica del corazón en consulta, cirugía y valoración preanestésica."
+precio: 17946
 disponibilidad: "En stock"
 destacado: false
 order: 1

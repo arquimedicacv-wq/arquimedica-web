@@ -6,6 +6,7 @@ categoria: "veterinarios"
 subcategoria: "Monitores de signos vitales"
 imagen: "/images/equipo/monitor-veterinario-signos-vitales-mindray-vetal-3.png"
 descripcionCorta: "Monitor veterinario portátil Mindray Vetal 3 sin capnógrafo, con pantalla LED de 10.1 pulgadas y monitoreo de ECG, SpO2, PNI, temperatura y respiración."
+precio: 28900
 disponibilidad: "En stock"
 destacado: false
 order: 1

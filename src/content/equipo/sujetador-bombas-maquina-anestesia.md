@@ -6,6 +6,7 @@ categoria: "veterinarios"
 subcategoria: "Anestesia"
 imagen: "/images/equipo/sujetador-bombas-maquina-anestesia-mindray.png"
 descripcionCorta: "Sujetador para montar bombas de infusión en máquinas de anestesia veterinaria Mindray, para mantener el equipo ordenado y al alcance durante el procedimiento."
+precio: 3382
 disponibilidad: "En stock"
 destacado: false
 order: 1

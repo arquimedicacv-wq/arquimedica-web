@@ -6,6 +6,7 @@ categoria: "veterinarios"
 subcategoria: "Electrocardiografía"
 imagen: "/images/equipo/electrocardiografo-veterinario-mindray-beneheart-r3-vet.png"
 descripcionCorta: "Electrocardiógrafo veterinario portátil Mindray BeneHeart R3 Vet de 3 canales, con pantalla a color de 5 pulgadas, registrador térmico y peso de 1.2 kg."
+precio: 26360
 disponibilidad: "En stock"
 destacado: false
 order: 1

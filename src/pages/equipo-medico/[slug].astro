@@ -44,7 +44,6 @@ const disp: Record<string, { dot: string; text: string; bg: string }> = {
 const esHumano = data.categoria === "humanos";
 const categoriaLabel = esHumano ? "Uso humano" : "Uso veterinario";
 
-// Especificaciones: destacadas (cortas) para el hero, completas para la ficha
 const specs = data.especificaciones ?? [];
 const destacadas = specs
   .filter(
@@ -52,7 +51,6 @@ const destacadas = specs
   )
   .slice(0, 4);
 
-// Relacionados: primero misma subcategoría, luego misma categoría
 const otros = productos
   .filter((p) => p.data.categoria === data.categoria && p.id !== entry.id)
   .sort((a, b) => {
@@ -62,7 +60,6 @@ const otros = productos
   });
 const relacionados = otros.slice(0, 3);
 
-// SEO: datos estructurados Product (sin offers, porque no hay precio público)
 const imagenAbsoluta = Astro.site
   ? new URL(data.imagen, Astro.site).href
   : data.imagen;
@@ -117,7 +114,7 @@ const jsonLd = {
     <Container>
       <div class="grid gap-8 lg:grid-cols-2 lg:gap-12">
         <div
-          class="flex aspect-[4/3] items-center justify-center overflow-hidden rounded-2xl border border-neutral-border bg-neutral-bg lg:sticky lg:top-24 lg:self-start"
+          class="flex aspect-[4/3] items-center justify-center overflow-hidden rounded-2xl border border-neutral-border bg-white lg:sticky lg:top-24 lg:self-start"
         >
           <img
             src={data.imagen}
@@ -176,6 +173,33 @@ const jsonLd = {
           <p class="text-base leading-relaxed text-slate-600">
             {data.descripcionCorta}
           </p>
+
+          {
+            data.precio !== undefined ? (
+              <div class="rounded-xl border border-brand-teal-dark/10 bg-brand-teal-dark/[0.05] px-5 py-4">
+                <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">
+                  Precio
+                </p>
+                <p class="mt-1 text-3xl font-extrabold tracking-tight text-brand-teal-dark">
+                  {new Intl.NumberFormat("es-MX", {
+                    style: "currency",
+                    currency: "MXN",
+                    maximumFractionDigits: 0,
+                  }).format(data.precio)}{" "}
+                  <span class="text-base">MXN</span>
+                </p>
+              </div>
+            ) : (
+              <div class="rounded-xl border border-neutral-border bg-neutral-bg px-5 py-4">
+                <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">
+                  Precio
+                </p>
+                <p class="mt-1 text-lg font-bold text-brand-dark">
+                  Consultar precio
+                </p>
+              </div>
+            )
+          }
 
           <!-- Características destacadas -->
           {
@@ -266,6 +290,23 @@ const jsonLd = {
                     <dd class="font-medium text-brand-dark">{s.valor}</dd>
                   </div>
                 ))
+              }
+              {
+                data.precio !== undefined && (
+                  <div class="px-5 py-4 bg-brand-teal-dark/[0.04]">
+                    <dt class="text-xs font-semibold uppercase tracking-wider text-neutral-text">
+                      Precio
+                    </dt>
+                    <dd class="mt-1 text-xl font-extrabold text-brand-teal-dark">
+                      {new Intl.NumberFormat("es-MX", {
+                        style: "currency",
+                        currency: "MXN",
+                        maximumFractionDigits: 0,
+                      }).format(data.precio)}{" "}
+                      <span class="text-base">MXN</span>
+                    </dd>
+                  </div>
+                )
               }
             </dl>
 

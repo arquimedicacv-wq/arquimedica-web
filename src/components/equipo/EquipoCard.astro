@@ -14,6 +14,7 @@ interface Props {
   imagen: string;
   descripcionCorta: string;
   subcategoria: string;
+  precio?: number;
   disponibilidad: "En stock" | "Bajo pedido" | "Consultar";
   destacado?: boolean;
   especificaciones?: Spec[];
@@ -28,13 +29,13 @@ const {
   imagen,
   descripcionCorta,
   subcategoria,
+  precio,
   disponibilidad,
   destacado = false,
   especificaciones = [],
   whatsappMensaje,
 } = Astro.props;
 
-// Número de WhatsApp: define PUBLIC_WHATSAPP en tu .env (ej. 5215512345678)
 const WHATSAPP_NUMBER = import.meta.env.PUBLIC_WHATSAPP ?? "";
 const whatsappUrl =
   WHATSAPP_NUMBER && whatsappMensaje
@@ -47,8 +48,6 @@ const disp: Record<Props["disponibilidad"], { dot: string; text: string }> = {
   Consultar: { dot: "bg-neutral-400", text: "text-neutral-600" },
 };
 
-// Specs clave: omitimos "Tipo de equipo" (ya lo cubre la subcategoría)
-// y preferimos valores cortos, que caben bien en la tarjeta.
 const MAX_SPECS = 3;
 const MAX_LEN = 40;
 
@@ -68,7 +67,7 @@ const specsRestantes = Math.max(candidatas.length - specsVisibles.length, 0);
 >
   <!-- Imagen -->
   <div
-    class="relative flex aspect-[4/3] w-full items-center justify-center overflow-hidden bg-neutral-bg"
+    class="relative flex aspect-[4/3] w-full items-center justify-center overflow-hidden bg-white"
   >
     <img
       src={imagen}
@@ -115,7 +114,6 @@ const specsRestantes = Math.max(candidatas.length - specsVisibles.length, 0);
       >
     </div>
 
-    <!-- Nombre (enlace principal que cubre toda la tarjeta) -->
     <h3 class="font-heading text-base font-bold leading-snug text-brand-dark">
       <a
         href={`/equipo-medico/${id}/`}
@@ -129,7 +127,38 @@ const specsRestantes = Math.max(candidatas.length - specsVisibles.length, 0);
       {descripcionCorta}
     </p>
 
-    <!-- Especificaciones clave -->
+    {
+      precio !== undefined && (
+        <div class="mt-4 rounded-xl bg-brand-teal-dark/[0.06] border border-brand-teal-dark/10 px-4 py-3">
+          <p class="text-[11px] font-semibold uppercase tracking-wider text-slate-500">
+            Precio
+          </p>
+
+          <p class="mt-0.5 text-2xl font-extrabold tracking-tight text-brand-teal-dark">
+            {new Intl.NumberFormat("es-MX", {
+              style: "currency",
+              currency: "MXN",
+              maximumFractionDigits: 0,
+            }).format(precio)}{" "}
+            <span class="text-base">MXN</span>
+          </p>
+        </div>
+      )
+    }
+    {
+      precio === undefined && (
+        <div class="mt-4 rounded-xl bg-slate-50 border border-slate-200 px-4 py-3">
+          <p class="text-[11px] font-semibold uppercase tracking-wider text-slate-500">
+            Precio
+          </p>
+
+          <p class="mt-0.5 text-base font-bold text-brand-dark">
+            Consultar precio
+          </p>
+        </div>
+      )
+    }
+
     {
       specsVisibles.length > 0 && (
         <dl class="divide-y divide-neutral-border rounded-xl border border-neutral-border bg-neutral-bg/60 text-xs">
@@ -154,8 +183,6 @@ const specsRestantes = Math.max(candidatas.length - specsVisibles.length, 0);
         </p>
       )
     }
-
-    <!-- Acciones -->
     <div
       class="mt-auto flex items-center gap-2 border-t border-neutral-border pt-4"
     >
